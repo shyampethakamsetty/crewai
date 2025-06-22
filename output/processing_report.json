@@ -1,0 +1,35 @@
+{
+  "processing_metadata": {
+    "processing_time": "2025-06-22T17:22:43.228622",
+    "processor_version": "1.0",
+    "raw_data_source": "youtube_collection_tool"
+  },
+  "data_transformation": {
+    "raw_records": 2,
+    "processed_records": 2,
+    "transformation_success_rate": 100.0
+  },
+  "quality_metrics": {
+    "collection": {
+      "total_videos": 2,
+      "total_channels": 2,
+      "success_rate": 100.0
+    },
+    "transcripts": {
+      "available": 2,
+      "availability_rate": 100.0,
+      "total_words": 0,
+      "avg_words_per_video": 0.0
+    },
+    "engagement": {
+      "total_views": 1960,
+      "avg_views_per_video": 980.0,
+      "total_likes": 0
+    }
+  },
+  "file_outputs": {
+    "processed_data": "output/processed_data.json",
+    "transcripts_directory": "transcripts/",
+    "report_file": "output/processing_report.json"
+  }
+}

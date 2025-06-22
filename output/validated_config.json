@@ -1,0 +1,35 @@
+{
+  "metadata": {
+    "validation_time": "2025-06-22T17:22:27.304042",
+    "source_file": "config/channels.json",
+    "version": "1.0"
+  },
+  "channels": [
+    {
+      "channel_id": "UCSDJl5c-AvvQvgsnKB4QKOA",
+      "channel_name": "Lee Lowell - The Smart Option Seller",
+      "platform": "youtube",
+      "active": true,
+      "validated": true
+    },
+    {
+      "channel_id": "UC9kVkLPTdjaj4shvCFfoA9g",
+      "channel_name": "Fat Cat",
+      "platform": "youtube",
+      "active": true,
+      "validated": true
+    },
+    {
+      "channel_id": "UCu5zHoiswVlyeR3T-W6e_hA",
+      "channel_name": "Maverick Trading",
+      "platform": "youtube",
+      "active": true,
+      "validated": true
+    }
+  ],
+  "parameters": {
+    "default_hours_back": 24,
+    "default_batch_size": 75,
+    "max_retries": 3
+  }
+}

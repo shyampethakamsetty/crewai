@@ -1,0 +1,60 @@
+load_configuration_task:
+  description: >
+    Load and validate data collection configuration:
+    1. Read channel configuration from config/channels.json
+    2. Validate all channel IDs and parameters
+    3. Save validated configuration to output/validated_config.json
+    4. Return configuration summary and file path for next agent
+  expected_output: >
+    Configuration validation summary containing:
+    - Total channels loaded and validated
+    - Configuration file path: output/validated_config.json
+    - Validation status and any errors
+    - Ready-to-use channel list summary
+  agent: load_configuration
+
+youtube_collection_task:
+  description: >
+    Collect YouTube data using the validated configuration from previous agent:
+    1. Read validated configuration from: {validated_config_file}
+    2. Fetch recent videos from all configured channels (last {hours_back} hours)
+    3. Extract video metadata and transcripts in optimized batches
+    4. Save raw collection data to: output/raw_youtube_data.json
+    5. Save individual transcripts to: transcripts/[video_id]_transcript.txt
+    6. Return collection statistics and file paths only
+    
+    Process channels in batches of {video_batch_size} for optimal performance.
+    IMPORTANT: Do NOT return full data - only statistics and file paths.
+  expected_output: >
+    YouTube collection summary containing:
+    - Collection statistics (videos collected, transcripts available, etc.)
+    - Raw data file path: output/raw_youtube_data.json
+    - Transcripts directory: transcripts/
+    - Collection success rate and performance metrics
+    - File paths for next agent to process
+  agent: youtube_collector
+  context:
+    - load_configuration_task
+
+data_processing_task:
+  description: >
+    Process and standardize the collected YouTube data from previous agent:
+    1. Read raw collection data from: {raw_data_file}
+    2. Read individual transcript files from: {transcripts_dir}
+    3. Normalize video metadata, channel information, and transcript statistics
+    4. Save processed data to: output/processed_data.json
+    5. Save processing report to: output/processing_report.json
+    6. Return processing statistics and final file paths
+    
+    Use the Data Processor tool for efficient algorithmic processing.
+    Focus on data quality and standardization without LLM overhead.
+  expected_output: >
+    Data processing summary containing:
+    - Processing statistics (records processed, quality metrics, etc.)
+    - Processed data file path: output/processed_data.json
+    - Processing report file path: output/processing_report.json
+    - Data quality assessment and validation results
+    - Final dataset summary ready for analysis
+  agent: data_processor
+  context:
+    - youtube_collection_task
