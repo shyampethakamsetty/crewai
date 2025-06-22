@@ -6,18 +6,21 @@ import json
 import os
 import time
 import http.client
+import yaml
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 from pathlib import Path
+import re
 
 # Load environment variables
 load_dotenv()
 
 class YouTubeCollectionInput(BaseModel):
     """Input schema for YouTube Collection Tool."""
-    validated_config_file: str = Field(default="output/validated_config.json", description="Path to validated configuration file")
-    hours_back: int = Field(default=24, description="Hours back to collect videos from")
-    video_batch_size: int = Field(default=75, description="Number of videos per batch")
+    config_file: str = Field(default="config/youtube_configuration.yaml", description="Path to YouTube configuration file")
+    hours_back_override: int = Field(default=None, description="Override hours back from config (optional)")
+    video_batch_size_override: int = Field(default=None, description="Override video batch size from config (optional)")
+    output_dir: str = Field(default="output", description="Output directory for saving files")
 
 class YouTubeCollectionTool(BaseTool):
     name: str = "YouTube Data Collector"
@@ -27,30 +30,35 @@ class YouTubeCollectionTool(BaseTool):
     )
     args_schema: Type[BaseModel] = YouTubeCollectionInput
 
-    def _run(self, validated_config_file: str = "output/validated_config.json", hours_back: int = 24, video_batch_size: int = 75) -> str:
-        """Execute YouTube data collection from validated config file."""
+    def _run(self, config_file: str = "config/youtube_configuration.yaml", hours_back_override: int = None, video_batch_size_override: int = None, output_dir: str = "output") -> str:
+        """Execute YouTube data collection from YAML configuration file."""
         try:
-            # Load validated configuration
-            config_data = self._load_validated_config(validated_config_file)
+            # Load and validate YouTube configuration
+            config_data = self._load_youtube_config(config_file)
             if not config_data:
                 return json.dumps({
                     "status": "error",
-                    "error": "Could not load validated configuration",
+                    "error": "Could not load YouTube configuration",
                     "collection_time": datetime.now().isoformat()
                 })
             
-            # Extract channel IDs
-            channel_ids = [ch["channel_id"] for ch in config_data.get("channels", []) if ch.get("active", True)]
+            # Get enabled channels with their specific settings
+            channel_configs = self._get_enabled_channels_with_settings(config_data)
             
-            if not channel_ids:
+            if not channel_configs:
                 return json.dumps({
                     "status": "error",
-                    "error": "No active channels found in configuration",
+                    "error": "No enabled channels found in configuration",
                     "collection_time": datetime.now().isoformat()
                 })
             
-            # Collect YouTube data
-            results = self._collect_youtube_data(channel_ids, hours_back, video_batch_size)
+            # Apply global overrides if provided
+            global_settings = config_data.get("global_settings", {})
+            hours_back = hours_back_override or global_settings.get("hours_back", 24)
+            video_batch_size = video_batch_size_override or global_settings.get("video_batch_size", 75)
+            
+            # Collect YouTube data with enhanced configuration
+            results = self._collect_youtube_data_enhanced(channel_configs, hours_back, video_batch_size, config_data)
             
             if not results:
                 return json.dumps({
@@ -59,17 +67,17 @@ class YouTubeCollectionTool(BaseTool):
                     "collection_time": datetime.now().isoformat()
                 })
             
-            # Save raw data to file
-            raw_data_file = "output/raw_youtube_data.json"
-            collection_stats = self._save_raw_data_and_get_stats(results, raw_data_file)
+            # Save raw data to file with embedded transcripts in date-based directory
+            raw_data_file = f"{output_dir}/raw_youtube_data.json"
+            collection_stats = self._save_raw_data_with_transcripts_and_get_stats(results, raw_data_file)
             
             return json.dumps({
                 "status": "success",
                 "collection_time": datetime.now().isoformat(),
                 "raw_data_file": raw_data_file,
-                "transcripts_directory": "transcripts/",
+                "output_directory": output_dir,
                 "statistics": collection_stats,
-                "summary": f"Collected {collection_stats['total_videos']} videos from {collection_stats['total_channels']} channels"
+                "summary": f"Collected {collection_stats['total_videos_collected']} videos from {collection_stats['total_transcripts_collected']} transcripts"
             }, indent=2)
             
         except Exception as e:
@@ -79,135 +87,210 @@ class YouTubeCollectionTool(BaseTool):
                 "collection_time": datetime.now().isoformat()
             })
 
-    def _load_validated_config(self, config_file: str) -> Dict:
-        """Load validated configuration from file."""
+    def _load_youtube_config(self, config_file: str) -> Dict:
+        """Load YouTube configuration from YAML file."""
         try:
             with open(config_file, 'r', encoding='utf-8') as f:
-                return json.load(f)
+                config = yaml.safe_load(f)
+            
+            # Validate the configuration structure
+            if not self._validate_config_structure(config):
+                print(f"Invalid configuration structure in {config_file}")
+                return None
+                
+            return config
         except Exception as e:
-            print(f"Error loading config file {config_file}: {e}")
+            print(f"Error loading YAML config file {config_file}: {e}")
             return None
+    
+    def _validate_config_structure(self, config: Dict) -> bool:
+        """Validate the basic structure of the configuration."""
+        required_sections = ['global_settings', 'channels']
+        
+        for section in required_sections:
+            if section not in config:
+                print(f"Missing required section: {section}")
+                return False
+        
+        # Validate channels structure
+        channels = config.get('channels', [])
+        if not isinstance(channels, list) or len(channels) == 0:
+            print("Channels section must be a non-empty list")
+            return False
+            
+        for i, channel in enumerate(channels):
+            if not isinstance(channel, dict):
+                print(f"Channel {i} must be a dictionary")
+                return False
+            if 'channel_id' not in channel:
+                print(f"Channel {i} missing required 'channel_id' field")
+                return False
+            if not self._is_valid_youtube_channel_id(channel['channel_id']):
+                print(f"Channel {i} has invalid YouTube channel ID: {channel['channel_id']}")
+                return False
+                
+        return True
+    
+    def _is_valid_youtube_channel_id(self, channel_id: str) -> bool:
+        """Validate YouTube channel ID format."""
+        if not isinstance(channel_id, str):
+            return False
+        channel_id = channel_id.strip()
+        return len(channel_id) == 24 and channel_id.startswith(('UC', 'UU', 'UL'))
+    
+    def _get_enabled_channels_with_settings(self, config_data: Dict) -> List[Dict]:
+        """Extract enabled channels with their settings."""
+        channels = config_data.get("channels", [])
+        
+        enabled_channels = []
+        
+        for channel in channels:
+            if not channel.get("enabled", True):
+                continue
+                
+            # Simple channel configuration
+            channel_config = {
+                "channel_id": channel["channel_id"],
+                "name": channel.get("name", "")
+            }
+            
+            enabled_channels.append(channel_config)
+            
+        return enabled_channels
 
-    def _save_raw_data_and_get_stats(self, results: List[Dict], output_file: str) -> Dict:
-        """Save raw collection data to file and return statistics."""
+    def _save_raw_data_with_transcripts_and_get_stats(self, results: List[Dict], output_file: str) -> Dict:
+        """Save raw collection data with embedded transcripts to file and return statistics."""
         try:
             # Create output directory
             Path(output_file).parent.mkdir(parents=True, exist_ok=True)
             
-            # Prepare data for saving (without full transcripts)
-            raw_data = {
-                "metadata": {
-                    "collection_time": datetime.now().isoformat(),
-                    "data_version": "1.0",
-                    "source": "youtube_collection_tool"
-                },
-                "data": []
-            }
+            # Prepare data for saving (no metadata, just the data array)
+            processed_data = []
             
             # Process results and calculate statistics
             total_videos = 0
             total_transcripts = 0
-            total_channels = set()
-            total_words = 0
+            total_duration_seconds = 0
             
             for item in results:
-                # Remove full transcript text before saving
-                processed_item = self._convert_to_json_serializable(item)
-                raw_data["data"].append(processed_item)
+                # Keep full transcript text in the data (don't remove it)
+                processed_item = self._convert_to_json_serializable_with_transcripts(item)
+                processed_data.append(processed_item)
                 
                 # Calculate statistics
                 if "video_info" in item:
                     total_videos += 1
-                    if "channel_id" in item.get("video_info", {}):
-                        total_channels.add(item["video_info"]["channel_id"])
+                    
+                    # Parse duration for total hours calculation
+                    duration = item.get("video_info", {}).get("duration", "")
+                    if duration:
+                        total_duration_seconds += self._parse_duration_to_seconds(duration)
                 
-                if "transcript_stats" in processed_item:
-                    stats = processed_item["transcript_stats"]
-                    if stats.get("available", False):
-                        total_transcripts += 1
-                        total_words += stats.get("word_count", 0)
+                # Check transcript data
+                transcript_data = item.get("transcript_data", {})
+                if transcript_data.get("transcript_available", False):
+                    total_transcripts += 1
             
-            # Save raw data
+            # Save raw data with embedded transcripts (no metadata wrapper)
             with open(output_file, 'w', encoding='utf-8') as f:
-                json.dump(raw_data, f, indent=2, ensure_ascii=False)
+                json.dump(processed_data, f, indent=2, ensure_ascii=False)
             
-            # Return statistics
+            # Return only the requested statistics
             return {
-                "total_videos": total_videos,
-                "total_channels": len(total_channels),
-                "total_transcripts": total_transcripts,
-                "transcript_availability_rate": round((total_transcripts / total_videos) * 100, 1) if total_videos > 0 else 0,
-                "total_words": total_words,
-                "avg_words_per_video": round(total_words / total_videos, 1) if total_videos > 0 else 0,
-                "raw_data_file_size": os.path.getsize(output_file) if os.path.exists(output_file) else 0
+                "total_videos_collected": total_videos,
+                "total_transcripts_collected": total_transcripts,
+                "total_transcript_hours": round(total_duration_seconds / 3600, 2)
             }
             
         except Exception as e:
             print(f"Error saving raw data: {e}")
             return {
-                "total_videos": 0,
-                "total_channels": 0,
-                "total_transcripts": 0,
+                "total_videos_collected": 0,
+                "total_transcripts_collected": 0,
+                "total_transcript_hours": 0.0,
                 "error": str(e)
             }
 
-    def _convert_to_json_serializable(self, data):
-        """Convert data to JSON serializable format."""
+    def _convert_to_json_serializable_with_transcripts(self, data):
+        """Convert data to JSON serializable format while keeping transcripts."""
         if isinstance(data, list):
-            return [self._convert_to_json_serializable(item) for item in data]
+            return [self._convert_to_json_serializable_with_transcripts(item) for item in data]
         elif isinstance(data, dict):
             result = {}
             for key, value in data.items():
-                # Skip full transcript text to reduce payload size
-                if key == "transcript_only_text":
-                    # Save transcript to separate file and add statistics
-                    if value and isinstance(value, str):
-                        video_id = data.get("video_info", {}).get("video_id", "unknown")
-                        transcript_stats = self._save_transcript_and_get_stats(value, video_id)
-                        result["transcript_stats"] = transcript_stats
-                    continue
-                result[key] = self._convert_to_json_serializable(value)
+                # Keep transcript text in the data (don't remove it)
+                result[key] = self._convert_to_json_serializable_with_transcripts(value)
             return result
         elif hasattr(data, 'isoformat'):  # datetime objects
             return data.isoformat()
         else:
             return data
 
-    def _save_transcript_and_get_stats(self, transcript_text: str, video_id: str) -> dict:
-        """Save transcript to file and return statistics."""
+    def _parse_duration_to_seconds(self, duration_str: str) -> int:
+        """Parse YouTube duration string to seconds."""
         try:
-            # Create transcripts directory
-            transcript_dir = "transcripts"
-            os.makedirs(transcript_dir, exist_ok=True)
+            # Handle PT format (PT1H2M3S) or simple format (1:02:03)
+            if duration_str.startswith('PT'):
+                # Parse PT format
+                duration_str = duration_str[2:]  # Remove 'PT'
+                hours = minutes = seconds = 0
+                
+                # Extract hours
+                if 'H' in duration_str:
+                    hours_match = re.search(r'(\d+)H', duration_str)
+                    if hours_match:
+                        hours = int(hours_match.group(1))
+                
+                # Extract minutes
+                if 'M' in duration_str:
+                    minutes_match = re.search(r'(\d+)M', duration_str)
+                    if minutes_match:
+                        minutes = int(minutes_match.group(1))
+                
+                # Extract seconds
+                if 'S' in duration_str:
+                    seconds_match = re.search(r'(\d+)S', duration_str)
+                    if seconds_match:
+                        seconds = int(seconds_match.group(1))
+                
+                return hours * 3600 + minutes * 60 + seconds
             
-            # Save transcript to file
-            transcript_file = os.path.join(transcript_dir, f"{video_id}_transcript.txt")
-            with open(transcript_file, 'w', encoding='utf-8') as f:
-                f.write(transcript_text)
-            
-            # Calculate statistics
-            word_count = len(transcript_text.split()) if transcript_text else 0
-            char_count = len(transcript_text) if transcript_text else 0
-            estimated_reading_time = round(word_count / 200, 1) if word_count > 0 else 0
-            
-            return {
-                "available": True,
-                "word_count": word_count,
-                "character_count": char_count,
-                "estimated_reading_time_minutes": estimated_reading_time,
-                "transcript_file": transcript_file,
-                "file_size_bytes": len(transcript_text.encode('utf-8'))
-            }
-            
-        except Exception as e:
-            print(f"Warning: Could not save transcript for {video_id}: {e}")
-            return {
-                "available": False,
-                "word_count": 0,
-                "character_count": 0,
-                "estimated_reading_time_minutes": 0,
-                "error": str(e)
-            }
+            else:
+                # Handle simple format (H:MM:SS or M:SS)
+                parts = duration_str.split(':')
+                if len(parts) == 3:  # H:MM:SS
+                    return int(parts[0]) * 3600 + int(parts[1]) * 60 + int(parts[2])
+                elif len(parts) == 2:  # M:SS
+                    return int(parts[0]) * 60 + int(parts[1])
+                else:
+                    return int(parts[0])  # Just seconds
+                    
+        except Exception:
+            return 0
+
+    def _collect_youtube_data_enhanced(self, channel_configs: List[Dict], default_hours_back: int, video_batch_size: int, full_config: Dict) -> List[Dict]:
+        """Collect YouTube data using simplified configuration."""
+        # Extract channel IDs from the simplified config
+        channel_ids = [ch["channel_id"] for ch in channel_configs]
+        
+        # Use the existing collection method
+        results = self._collect_youtube_data(channel_ids, default_hours_back, video_batch_size)
+        
+        # Add basic channel names to results if available
+        for result in results:
+            channel_id = result.get("video_info", {}).get("channel_id")
+            if channel_id:
+                # Find the channel name from our config
+                for ch_config in channel_configs:
+                    if ch_config["channel_id"] == channel_id:
+                        result["channel_config"] = {
+                            "name": ch_config["name"]
+                        }
+                        break
+        
+        return results
+    
+
 
     def _collect_youtube_data(self, channel_ids: List[str], hours_back: int, video_batch_size: int) -> List[Dict]:
         """Core YouTube collection logic (adapted from your existing code)."""

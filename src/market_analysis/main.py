@@ -1,21 +1,29 @@
 # src/data_collection/main.py
 import os
+from datetime import datetime
 from market_analysis.crew import DataCollectionCrew
 from market_analysis.utils.crewai_logger import CrewAILogger
 
-os.makedirs('output', exist_ok=True)
-
 def run():
-    """Run the data collection crew with comprehensive logging."""
+    """Run the simplified data collection crew with comprehensive logging."""
+    # Generate date-based directory names (date only, no time)
+    date_now = datetime.now().strftime("%Y%m%d")
+    output_dir = f"output/{date_now}"
+    logs_dir = f"logs/{date_now}"
+    
+    # Create date-based directories
+    os.makedirs(output_dir, exist_ok=True)
+    os.makedirs(logs_dir, exist_ok=True)
+    
     # Initialize the advanced logger
-    logger = CrewAILogger(enable_console=True)
+    logger = CrewAILogger(enable_console=True, log_dir=logs_dir)
     
     inputs = {
-        'config_path': 'config/channels.json',
-        'hours_back': 24,
-        'batch_size': 75,
-        'video_batch_size': 75,
-        'output_file': 'output/collected_data.json'
+        'youtube_config_file': 'config/youtube_configuration.yaml',
+        'output_file': f'{output_dir}/collected_data.json',
+        'output_dir': output_dir,
+        'logs_dir': logs_dir,
+        'date_now': date_now
     }
     
     try:
@@ -30,8 +38,10 @@ def run():
             # Log results
             logger.log_results(result, inputs['output_file'])
         
-        print("\n🎉 Data collection completed!")
+        print(f"\n🎉 Data collection completed!")
         print(f"Results saved to: {inputs['output_file']}")
+        print(f"Output directory: {output_dir}")
+        print(f"Logs directory: {logs_dir}")
         print(f"Detailed logs saved to: {logger.get_log_filepath()}")
         
     except Exception as e:

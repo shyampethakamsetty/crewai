@@ -10,17 +10,10 @@ sys.path.append('src')
 from market_analysis.tools.youtube_collection_tool import YouTubeCollectionTool
 
 def test_youtube_tool():
-    """Test the YouTube collection tool with sample data"""
-    
-    # Test channel IDs (from your channels.json)
-    test_channel_ids = [
-        "UCSDJl5c-AvvQvgsnKB4QKOA",  # Lee Lowell - The Smart Option Seller
-        "UC9kVkLPTdjaj4shvCFfoA9g",  # Fat Cat
-        "UCu5zHoiswVlyeR3T-W6e_hA"   # Maverick Trading
-    ]
+    """Test the YouTube collection tool with simplified configuration"""
     
     print("🧪 Testing YouTube Collection Tool...")
-    print(f"📺 Testing with {len(test_channel_ids)} channels")
+    print(f"📁 Using config: config/youtube_configuration.yaml")
     print(f"⏰ Time range: Last 24 hours")
     print(f"📦 Batch size: 75 videos")
     print("-" * 50)
@@ -29,11 +22,9 @@ def test_youtube_tool():
         # Create tool instance
         tool = YouTubeCollectionTool()
         
-        # Test the tool
+        # Test the tool with simplified parameters
         result = tool._run(
-            channel_ids=test_channel_ids,
-            hours_back=24,
-            video_batch_size=75
+            config_file="config/youtube_configuration.yaml"
         )
         
         print("✅ Tool execution completed!")
@@ -45,13 +36,15 @@ def test_youtube_tool():
         import json
         parsed_result = json.loads(result)
         print(f"📊 Status: {parsed_result.get('status')}")
-        print(f"📊 Total videos: {parsed_result.get('total_videos')}")
         
         if parsed_result.get('status') == 'success':
-            data = parsed_result.get('data', [])
-            print(f"📊 Data items: {len(data)}")
-            if data:
-                print(f"📊 First video: {data[0].get('video_info', {}).get('title', 'N/A')}")
+            statistics = parsed_result.get('statistics', {})
+            print(f"📊 Total videos: {statistics.get('total_videos', 0)}")
+            print(f"📊 Total channels: {statistics.get('total_channels', 0)}")
+            print(f"📊 Total transcripts: {statistics.get('total_transcripts', 0)}")
+            print(f"📊 Raw data file: {parsed_result.get('raw_data_file', 'N/A')}")
+        else:
+            print(f"❌ Error: {parsed_result.get('error', 'Unknown error')}")
         
     except Exception as e:
         print(f"❌ Test failed: {e}")

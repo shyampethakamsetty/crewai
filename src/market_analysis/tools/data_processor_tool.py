@@ -11,6 +11,7 @@ class DataProcessorInput(BaseModel):
     """Input schema for Data Processor Tool."""
     raw_data_file: str = Field(default="output/raw_youtube_data.json", description="Path to raw data file from YouTube collection")
     transcripts_dir: str = Field(default="transcripts/", description="Directory containing transcript files")
+    output_dir: str = Field(default="output", description="Output directory for saving processed files")
 
 class DataProcessorTool(BaseTool):
     name: str = "Data Processor and Formatter"
@@ -20,11 +21,11 @@ class DataProcessorTool(BaseTool):
     )
     args_schema: Type[BaseModel] = DataProcessorInput
 
-    def _run(self, raw_data_file: str = "output/raw_youtube_data.json", transcripts_dir: str = "transcripts/") -> str:
+    def _run(self, raw_data_file: str = "output/raw_youtube_data.json", transcripts_dir: str = "transcripts/", output_dir: str = "output") -> str:
         """Execute data processing from raw data files."""
         try:
-            # Load raw data from file
-            raw_data = self._load_raw_data(raw_data_file)
+            # Load raw data from file (now from the date-based directory)
+            raw_data = self._load_raw_data(f"{output_dir}/raw_youtube_data.json")
             if not raw_data:
                 return json.dumps({
                     "status": "error",
@@ -32,27 +33,25 @@ class DataProcessorTool(BaseTool):
                     "processing_time": datetime.now().isoformat()
                 })
             
-            # Process the data
-            processed_data = self._process_youtube_data(raw_data)
+            # Process the data into simplified normalized structure
+            normalized_data = self._create_simplified_normalized_data(raw_data)
             
-            # Save processed data to files
-            processed_file = "output/processed_data.json"
-            report_file = "output/processing_report.json"
+            # Save normalized data
+            processed_file = f"{output_dir}/youtube_processed.json"
+            self._save_simplified_data_with_stats(normalized_data, raw_data, processed_file)
             
-            self._save_processed_data(processed_data, processed_file)
-            processing_report = self._generate_processing_report(processed_data, raw_data)
-            self._save_processing_report(processing_report, report_file)
-            
-            # Generate summary statistics
-            summary_stats = self._generate_summary_statistics(processed_data)
+            # Generate basic statistics
+            stats = self._generate_basic_statistics(raw_data)
             
             return json.dumps({
                 "status": "success",
                 "processing_time": datetime.now().isoformat(),
-                "processed_data_file": processed_file,
-                "processing_report_file": report_file,
-                "statistics": summary_stats,
-                "summary": f"Processed {summary_stats['records_processed']} records with {summary_stats['data_quality']} quality"
+                "processed_file": processed_file,
+                "output_directory": output_dir,
+                "total_transcript_hours": stats["total_transcript_hours"],
+                "total_videos_collected": stats["total_videos_collected"],
+                "total_transcripts_collected": stats["total_transcripts_collected"],
+                "summary": f"Processed {stats['total_videos_collected']} videos with {stats['total_transcripts_collected']} transcripts"
             }, indent=2)
             
         except Exception as e:
@@ -71,47 +70,115 @@ class DataProcessorTool(BaseTool):
             print(f"Error loading raw data file {raw_data_file}: {e}")
             return None
 
-    def _save_processing_report(self, report: Dict, report_file: str):
-        """Save processing report to file."""
-        Path(report_file).parent.mkdir(parents=True, exist_ok=True)
+    def _create_simplified_normalized_data(self, raw_data: List[Dict]) -> List[Dict]:
+        """Create simplified normalized data structure with only source, trader, data."""
+        normalized_records = []
         
-        with open(report_file, 'w', encoding='utf-8') as f:
-            json.dump(report, f, indent=2, ensure_ascii=False)
+        # raw_data is now a list directly (no metadata wrapper)
+        for item in raw_data:
+            channel_info = item.get("channel_info", {})
+            transcript_data = item.get("transcript_data", {})
+            
+            # Only include records with available transcripts
+            if transcript_data.get("transcript_available", False):
+                transcript_text = transcript_data.get("transcript_only_text", "")
+                if transcript_text:
+                    # Create simplified normalized record
+                    normalized_record = {
+                        "source": "youtube",
+                        "trader": channel_info.get("channel_name", "Unknown Channel"),
+                        "data": transcript_text
+                    }
+                    
+                    normalized_records.append(normalized_record)
+        
+        return normalized_records
 
-    def _generate_processing_report(self, processed_data: Dict, raw_data: Dict) -> Dict:
-        """Generate comprehensive processing report."""
+    def _save_simplified_data_with_stats(self, normalized_data: List[Dict], raw_data: List[Dict], output_file: str):
+        """Save simplified normalized data to file with statistics included."""
+        Path(output_file).parent.mkdir(parents=True, exist_ok=True)
+        
+        # Calculate statistics from raw data for accuracy
+        stats = self._generate_basic_statistics(raw_data)
+        
+        # Create the final structure with data and statistics
+        final_data = {
+            "data": normalized_data,
+            "total_transcript_hours": stats["total_transcript_hours"],
+            "total_videos_collected": stats["total_videos_collected"],
+            "total_transcripts_collected": stats["total_transcripts_collected"]
+        }
+        
+        # Save with statistics included
+        with open(output_file, 'w', encoding='utf-8') as f:
+            json.dump(final_data, f, indent=2, ensure_ascii=False)
+
+    def _generate_basic_statistics(self, raw_data: List[Dict]) -> Dict:
+        """Generate basic statistics - only the three requested metrics."""
+        total_videos = len(raw_data)
+        total_transcripts = 0
+        total_duration_seconds = 0
+        
+        for item in raw_data:
+            # Check transcript availability
+            transcript_data = item.get("transcript_data", {})
+            if transcript_data.get("transcript_available", False):
+                total_transcripts += 1
+            
+            # Calculate total duration
+            video_info = item.get("video_info", {})
+            duration = video_info.get("duration", "")
+            if duration:
+                total_duration_seconds += self._parse_duration_to_seconds(duration)
+        
         return {
-            "processing_metadata": {
-                "processing_time": datetime.now().isoformat(),
-                "processor_version": "1.0",
-                "raw_data_source": raw_data.get("metadata", {}).get("source", "unknown")
-            },
-            "data_transformation": {
-                "raw_records": len(raw_data.get("data", [])),
-                "processed_records": len(processed_data.get("videos", [])),
-                "transformation_success_rate": round((len(processed_data.get("videos", [])) / max(len(raw_data.get("data", [])), 1)) * 100, 1)
-            },
-            "quality_metrics": processed_data.get("statistics", {}),
-            "file_outputs": {
-                "processed_data": "output/processed_data.json",
-                "transcripts_directory": "transcripts/",
-                "report_file": "output/processing_report.json"
-            }
+            "total_videos_collected": total_videos,
+            "total_transcripts_collected": total_transcripts,
+            "total_transcript_hours": round(total_duration_seconds / 3600, 2)
         }
 
-    def _generate_summary_statistics(self, processed_data: Dict) -> Dict:
-        """Generate summary statistics for the response."""
-        stats = processed_data.get("statistics", {})
-        
-        return {
-            "records_processed": stats.get("collection", {}).get("total_videos", 0),
-            "channels_processed": stats.get("collection", {}).get("total_channels", 0),
-            "transcripts_available": stats.get("transcripts", {}).get("available", 0),
-            "transcript_availability_rate": f"{stats.get('transcripts', {}).get('availability_rate', 0)}%",
-            "total_words_processed": stats.get("transcripts", {}).get("total_words", 0),
-            "data_quality": "high" if stats.get("transcripts", {}).get("availability_rate", 0) > 80 else "medium",
-            "processing_success": True
-        }
+    def _parse_duration_to_seconds(self, duration_str: str) -> int:
+        """Parse YouTube duration string to seconds."""
+        try:
+            # Handle PT format (PT1H2M3S) or simple format (1:02:03)
+            if duration_str.startswith('PT'):
+                # Parse PT format
+                import re
+                duration_str = duration_str[2:]  # Remove 'PT'
+                hours = minutes = seconds = 0
+                
+                # Extract hours
+                if 'H' in duration_str:
+                    hours_match = re.search(r'(\d+)H', duration_str)
+                    if hours_match:
+                        hours = int(hours_match.group(1))
+                
+                # Extract minutes
+                if 'M' in duration_str:
+                    minutes_match = re.search(r'(\d+)M', duration_str)
+                    if minutes_match:
+                        minutes = int(minutes_match.group(1))
+                
+                # Extract seconds
+                if 'S' in duration_str:
+                    seconds_match = re.search(r'(\d+)S', duration_str)
+                    if seconds_match:
+                        seconds = int(seconds_match.group(1))
+                
+                return hours * 3600 + minutes * 60 + seconds
+            
+            else:
+                # Handle simple format (H:MM:SS or M:SS)
+                parts = duration_str.split(':')
+                if len(parts) == 3:  # H:MM:SS
+                    return int(parts[0]) * 3600 + int(parts[1]) * 60 + int(parts[2])
+                elif len(parts) == 2:  # M:SS
+                    return int(parts[0]) * 60 + int(parts[1])
+                else:
+                    return int(parts[0])  # Just seconds
+                    
+        except Exception:
+            return 0
 
     def _process_youtube_data(self, raw_data: Dict) -> Dict:
         """Process and normalize YouTube data."""
@@ -314,12 +381,4 @@ class DataProcessorTool(BaseTool):
                 "avg_views_per_video": avg_views,
                 "total_likes": sum(v["like_count"] for v in videos)
             }
-        }
-
-    def _save_processed_data(self, processed_data: Dict, output_file: str):
-        """Save processed data to file."""
-        # Create directory if it doesn't exist
-        Path(output_file).parent.mkdir(parents=True, exist_ok=True)
-        
-        with open(output_file, 'w', encoding='utf-8') as f:
-            json.dump(processed_data, f, indent=2, ensure_ascii=False) 
+        } 

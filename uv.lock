@@ -1739,10 +1739,14 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "crewai", extra = ["tools"] },
+    { name = "pyyaml" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "crewai", extras = ["tools"], specifier = ">=0.121.1,<1.0.0" }]
+requires-dist = [
+    { name = "crewai", extras = ["tools"], specifier = ">=0.121.1,<1.0.0" },
+    { name = "pyyaml", specifier = ">=6.0.0" },
+]
 
 [[package]]
 name = "markupsafe"

@@ -1,0 +1,41 @@
+# YouTube Data Collection Configuration
+metadata:
+  name: "YouTube Market Analysis Configuration"
+  version: "2.0"
+  created: "2025-06-22"
+  description: "Enhanced configuration for YouTube data collection with per-channel settings"
+
+# Global default settings
+global_settings:
+  hours_back: 24                    # Default hours to look back for videos
+  max_videos_per_channel: 5         # Maximum videos to collect per channel
+  video_batch_size: 75              # Number of videos to process in each batch
+  max_retries: 3                    # Maximum retry attempts for failed requests
+  enable_transcripts: true          # Whether to collect transcripts
+  transcript_language: "en"         # Preferred transcript language
+  output_directory: "output"        # Directory for output files
+  transcripts_directory: "transcripts"  # Directory for transcript files
+
+# Channel-specific configurations
+channels:
+  - channel_id: "UCSDJl5c-AvvQvgsnKB4QKOA"
+    name: "Lee Lowell - The Smart Option Seller"
+    enabled: true
+    
+  - channel_id: "UC9kVkLPTdjaj4shvCFfoA9g"
+    name: "Fat Cat"
+    enabled: true
+    
+  - channel_id: "UCu5zHoiswVlyeR3T-W6e_hA"
+    name: "Maverick Trading"
+    enabled: true
+
+# Collection strategy settings
+collection_strategy:
+  rate_limit_delay: 1.0            # Seconds to wait between API calls
+  timeout_seconds: 300             # Timeout for each collection attempt
+
+# Quality control settings
+quality_control:
+  validate_channel_ids: true       # Validate channel ID format
+  filter_duplicates: true          # Remove duplicate videos 

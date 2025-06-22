@@ -5,7 +5,6 @@ from crewai.agents.agent_builder.base_agent import BaseAgent
 from typing import List
 
 from .tools.youtube_collection_tool import YouTubeCollectionTool
-from .tools.config_loader_tool import ConfigLoaderTool
 from .tools.data_processor_tool import DataProcessorTool
 
 @CrewBase
@@ -14,14 +13,6 @@ class DataCollectionCrew():
 
     agents: List[BaseAgent]
     tasks: List[Task]
-
-    @agent
-    def channel_manager(self) -> Agent:
-        return Agent(
-            config=self.agents_config['channel_manager'],
-            verbose=True,
-            tools=[ConfigLoaderTool()]
-        )
 
     @agent
     def youtube_collector(self) -> Agent:
@@ -40,12 +31,6 @@ class DataCollectionCrew():
         )
 
     @task
-    def load_configuration_task(self) -> Task:
-        return Task(
-            config=self.tasks_config['load_configuration_task']
-        )
-
-    @task
     def youtube_collection_task(self) -> Task:
         return Task(
             config=self.tasks_config['youtube_collection_task']
@@ -54,8 +39,7 @@ class DataCollectionCrew():
     @task
     def data_processing_task(self) -> Task:
         return Task(
-            config=self.tasks_config['data_processing_task'],
-            output_file='output/collected_data.json'
+            config=self.tasks_config['data_processing_task']
         )
 
     @crew
