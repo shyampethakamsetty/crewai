@@ -1,0 +1,16 @@
+{
+  "data": [
+    {
+      "source": "youtube",
+      "trader": "test_channel",
+      "sentences": [
+        "Tesla is looking good.",
+        "TSLA should hit $300 soon.",
+        "Apple is also strong."
+      ],
+      "sentence_count": 3,
+      "processing_date": "2024-01-15"
+    }
+  ],
+  "sentence_processing_date": "2024-01-15"
+}

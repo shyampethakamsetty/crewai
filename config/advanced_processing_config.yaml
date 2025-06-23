@@ -1,0 +1,191 @@
+# Advanced Processing Configuration
+# This file configures the multi-approach sentence processing and ticker tagging system
+
+# General Settings
+general:
+  output_dir: "output"
+  backup_original: true
+  validation_enabled: true
+  confidence_threshold: 0.7
+  max_retries: 3
+  log_level: "INFO"
+
+# Sentence Processing Configuration
+sentence_processing:
+  min_sentence_length: 10
+  max_sentence_length: 500
+  confidence_threshold: 0.7
+  
+  # Method Selection
+  use_rule: true
+  use_spacy: true
+  use_nltk: true
+  use_transformer: true
+  use_hybrid: true
+  
+  # Financial Pattern Protection
+  protected_patterns:
+    - '\$\d+(?:\.\d{2})?'  # Dollar amounts
+    - '\d+(?:\.\d{1,2})?%'  # Percentages
+    - '\b[A-Z]{1,5}\b'  # Potential tickers
+    - '\d+(?:\.\d+)?'  # Decimal numbers
+    - '\b\d{1,2}:\d{2}\b'  # Time formats
+    - '\b\d{1,2}/\d{1,2}/\d{4}\b'  # Date formats
+  
+  # Sentence Boundary Indicators
+  sentence_endings:
+    - '.'
+    - '!'
+    - '?'
+    - ';'
+    - ':'
+    - '\n\n'
+  
+  # Financial Connectors (should NOT split sentences)
+  financial_connectors:
+    - 'and'
+    - 'or'
+    - 'but'
+    - 'however'
+    - 'therefore'
+    - 'meanwhile'
+    - 'furthermore'
+    - 'additionally'
+    - 'moreover'
+    - 'consequently'
+
+# Ticker Tagging Configuration
+ticker_tagging:
+  confidence_threshold: 0.7
+  
+  # Method Selection
+  use_regex: true
+  use_spacy: true
+  use_fuzzy: true
+  use_bert: true
+  use_context: true
+  validate_with_yahoo: true
+  
+  # Fuzzy Matching Settings
+  max_fuzzy_ratio: 85
+  min_agreement_threshold: 0.5
+  
+  # Context Validation
+  financial_context_words:
+    - 'trading'
+    - 'stock'
+    - 'shares'
+    - 'price'
+    - 'market'
+    - 'options'
+    - 'put'
+    - 'call'
+    - 'strike'
+    - 'expiration'
+    - 'premium'
+    - 'volume'
+    - 'earnings'
+    - 'revenue'
+    - 'profit'
+    - 'loss'
+    - 'dividend'
+    - 'split'
+    - 'ipo'
+    - 'merger'
+    - 'acquisition'
+    - 'analyst'
+    - 'rating'
+    - 'target'
+  
+  # False Positive Prevention
+  false_positive_patterns:
+    - 'THE'
+    - 'AND'
+    - 'FOR'
+    - 'ARE'
+    - 'ALL'
+    - 'BUT'
+    - 'NOT'
+    - 'YOU'
+    - 'THEY'
+    - 'THIS'
+    - 'THAT'
+    - 'WITH'
+    - 'FROM'
+    - 'HAVE'
+    - 'WILL'
+    - 'CAN'
+    - 'GET'
+    - 'SEE'
+    - 'NOW'
+    - 'ONE'
+
+# Quality Validation Settings
+validation:
+  sentence_quality:
+    min_avg_length: 20
+    max_avg_length: 300
+    min_ending_ratio: 0.8
+    min_financial_ratio: 0.3
+  
+  ticker_quality:
+    min_ticker_ratio: 0.1
+    max_ticker_ratio: 0.8
+    max_false_positives: 2
+
+# Performance Settings
+performance:
+  max_workers: 5
+  timeout_seconds: 30
+  batch_size: 10
+  cache_enabled: true
+  cache_ttl_hours: 24
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/advanced_processing.log"
+  max_file_size_mb: 10
+  backup_count: 5
+
+# External API Settings
+external_apis:
+  yahoo_finance:
+    enabled: true
+    timeout: 10
+    max_retries: 3
+  
+  alpha_vantage:
+    enabled: false
+    api_key: ""
+    timeout: 10
+  
+  iex_cloud:
+    enabled: false
+    api_key: ""
+    timeout: 10
+
+# Model Settings
+models:
+  spacy:
+    model_name: "en_core_web_sm"
+    custom_patterns: true
+  
+  bert:
+    model_name: "bert-base-uncased"
+    max_length: 512
+    batch_size: 8
+  
+  transformer:
+    model_name: "microsoft/DialoGPT-medium"
+    max_length: 512
+
+# Asset Mapping Sources
+asset_mapping:
+  primary_source: "config/asset_mapping.yaml"
+  secondary_sources:
+    - "config/etf_mapping.yaml"
+    - "config/crypto_mapping.yaml"
+  auto_update: true
+  update_interval_hours: 24 

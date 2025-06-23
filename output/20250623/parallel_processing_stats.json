@@ -1,0 +1,9 @@
+{
+  "total_transcripts_processed": 2,
+  "total_sentences_generated": 138,
+  "total_processing_time": 54.091092348098755,
+  "average_processing_time": 27.045546174049377,
+  "chunks_processed": 4,
+  "workers_used": 4,
+  "last_processed": "2025-06-23T09:18:22.939918"
+}

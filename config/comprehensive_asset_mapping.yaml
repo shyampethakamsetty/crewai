@@ -1,0 +1,722 @@
+# Comprehensive Asset Mapping
+# This file contains extensive mappings for stocks, ETFs, and cryptocurrencies
+
+# Major Technology Stocks
+technology:
+  - ticker: "AAPL"
+    aliases: ["apple", "apple inc", "appl"]
+    company_name: "Apple Inc."
+    sector: "Technology"
+    
+  - ticker: "MSFT"
+    aliases: ["microsoft", "microsoft corporation", "msft"]
+    company_name: "Microsoft Corporation"
+    sector: "Technology"
+    
+  - ticker: "GOOGL"
+    aliases: ["google", "alphabet", "alphabet inc", "googl"]
+    company_name: "Alphabet Inc."
+    sector: "Technology"
+    
+  - ticker: "AMZN"
+    aliases: ["amazon", "amazon.com", "amzn"]
+    company_name: "Amazon.com Inc."
+    sector: "Consumer Discretionary"
+    
+  - ticker: "TSLA"
+    aliases: ["tesla", "tesla inc", "tsla"]
+    company_name: "Tesla Inc."
+    sector: "Consumer Discretionary"
+    
+  - ticker: "NVDA"
+    aliases: ["nvidia", "nvidia corporation", "nvda"]
+    company_name: "NVIDIA Corporation"
+    sector: "Technology"
+    
+  - ticker: "META"
+    aliases: ["facebook", "meta", "meta platforms", "fb"]
+    company_name: "Meta Platforms Inc."
+    sector: "Technology"
+    
+  - ticker: "PLTR"
+    aliases: ["palantir", "palantir technologies", "palanteer", "palenter"]
+    company_name: "Palantir Technologies Inc."
+    sector: "Technology"
+    
+  - ticker: "NFLX"
+    aliases: ["netflix", "netflix inc", "nflx"]
+    company_name: "Netflix Inc."
+    sector: "Communication Services"
+    
+  - ticker: "ADBE"
+    aliases: ["adobe", "adobe inc", "adbe"]
+    company_name: "Adobe Inc."
+    sector: "Technology"
+
+# Financial Sector
+financial:
+  - ticker: "JPM"
+    aliases: ["jpmorgan", "jp morgan", "jpmorgan chase", "jpm"]
+    company_name: "JPMorgan Chase & Co."
+    sector: "Financial Services"
+    
+  - ticker: "BAC"
+    aliases: ["bank of america", "bofa", "bac"]
+    company_name: "Bank of America Corp."
+    sector: "Financial Services"
+    
+  - ticker: "WFC"
+    aliases: ["wells fargo", "wells fargo & co", "wfc"]
+    company_name: "Wells Fargo & Co."
+    sector: "Financial Services"
+    
+  - ticker: "GS"
+    aliases: ["goldman sachs", "goldman", "gs"]
+    company_name: "Goldman Sachs Group Inc."
+    sector: "Financial Services"
+    
+  - ticker: "MS"
+    aliases: ["morgan stanley", "morgan", "ms"]
+    company_name: "Morgan Stanley"
+    sector: "Financial Services"
+
+# Healthcare Sector
+healthcare:
+  - ticker: "JNJ"
+    aliases: ["johnson & johnson", "jnj", "johnson and johnson"]
+    company_name: "Johnson & Johnson"
+    sector: "Healthcare"
+    
+  - ticker: "PFE"
+    aliases: ["pfizer", "pfizer inc", "pfe"]
+    company_name: "Pfizer Inc."
+    sector: "Healthcare"
+    
+  - ticker: "UNH"
+    aliases: ["unitedhealth", "unitedhealth group", "unh"]
+    company_name: "UnitedHealth Group Inc."
+    sector: "Healthcare"
+    
+  - ticker: "ABBV"
+    aliases: ["abbvie", "abbvie inc", "abbv"]
+    company_name: "AbbVie Inc."
+    sector: "Healthcare"
+
+# Consumer Sector
+consumer:
+  - ticker: "KO"
+    aliases: ["coca cola", "coca-cola", "coke", "ko"]
+    company_name: "Coca-Cola Co."
+    sector: "Consumer Staples"
+    
+  - ticker: "PG"
+    aliases: ["procter & gamble", "procter and gamble", "pg"]
+    company_name: "Procter & Gamble Co."
+    sector: "Consumer Staples"
+    
+  - ticker: "WMT"
+    aliases: ["walmart", "wal-mart", "wmt"]
+    company_name: "Walmart Inc."
+    sector: "Consumer Staples"
+    
+  - ticker: "HD"
+    aliases: ["home depot", "home depot inc", "hd"]
+    company_name: "Home Depot Inc."
+    sector: "Consumer Discretionary"
+
+# Energy Sector
+energy:
+  - ticker: "XOM"
+    aliases: ["exxon", "exxon mobil", "exxonmobil", "xom"]
+    company_name: "Exxon Mobil Corp."
+    sector: "Energy"
+    
+  - ticker: "CVX"
+    aliases: ["chevron", "chevron corporation", "cvx"]
+    company_name: "Chevron Corporation"
+    sector: "Energy"
+
+# Major ETFs
+etfs:
+  - ticker: "SPY"
+    aliases: ["spdr s&p 500 etf", "spyder", "spy"]
+    company_name: "SPDR S&P 500 ETF Trust"
+    sector: "ETF"
+    
+  - ticker: "QQQ"
+    aliases: ["invesco qqq trust", "nasdaq etf", "qqq"]
+    company_name: "Invesco QQQ Trust"
+    sector: "ETF"
+    
+  - ticker: "IWM"
+    aliases: ["ishares russell 2000 etf", "russell 2000 etf", "iwm"]
+    company_name: "iShares Russell 2000 ETF"
+    sector: "ETF"
+    
+  - ticker: "VTI"
+    aliases: ["vanguard total stock market etf", "total market etf", "vti"]
+    company_name: "Vanguard Total Stock Market ETF"
+    sector: "ETF"
+    
+  - ticker: "VOO"
+    aliases: ["vanguard s&p 500 etf", "vanguard 500", "voo"]
+    company_name: "Vanguard S&P 500 ETF"
+    sector: "ETF"
+    
+  - ticker: "ARKK"
+    aliases: ["ark innovation etf", "ark innovation", "arkk"]
+    company_name: "ARK Innovation ETF"
+    sector: "ETF"
+    
+  - ticker: "TQQQ"
+    aliases: ["proshares ultrapro qqq", "3x qqq", "tqqq"]
+    company_name: "ProShares UltraPro QQQ"
+    sector: "ETF"
+    
+  - ticker: "SQQQ"
+    aliases: ["proshares ultrapro short qqq", "inverse qqq", "sqqq"]
+    company_name: "ProShares UltraPro Short QQQ"
+    sector: "ETF"
+    
+  - ticker: "SOXL"
+    aliases: ["direxion daily semiconductor bull 3x", "3x semiconductor bull", "soxl"]
+    company_name: "Direxion Daily Semiconductor Bull 3X Shares"
+    sector: "ETF"
+    
+  - ticker: "SOXS"
+    aliases: ["direxion daily semiconductor bear 3x", "3x semiconductor bear", "soxs"]
+    company_name: "Direxion Daily Semiconductor Bear 3X Shares"
+    sector: "ETF"
+
+# Leveraged ETFs
+leveraged_etfs:
+  - ticker: "SPXL"
+    aliases: ["direxion daily s&p 500 bull 3x", "3x s&p 500 bull", "spxl"]
+    company_name: "Direxion Daily S&P 500 Bull 3X Shares"
+    sector: "ETF"
+    
+  - ticker: "SPXS"
+    aliases: ["direxion daily s&p 500 bear 3x", "3x s&p 500 bear", "spxs"]
+    company_name: "Direxion Daily S&P 500 Bear 3X Shares"
+    sector: "ETF"
+    
+  - ticker: "LABU"
+    aliases: ["direxion daily s&p biotech bull 3x", "3x biotech bull", "labu"]
+    company_name: "Direxion Daily S&P Biotech Bull 3X Shares"
+    sector: "ETF"
+    
+  - ticker: "LABD"
+    aliases: ["direxion daily s&p biotech bear 3x", "3x biotech bear", "labd"]
+    company_name: "Direxion Daily S&P Biotech Bear 3X Shares"
+    sector: "ETF"
+
+# Cryptocurrencies
+cryptocurrencies:
+  - ticker: "BTC"
+    aliases: ["bitcoin", "btc"]
+    company_name: "Bitcoin"
+    sector: "Cryptocurrency"
+    
+  - ticker: "ETH"
+    aliases: ["ethereum", "eth"]
+    company_name: "Ethereum"
+    sector: "Cryptocurrency"
+    
+  - ticker: "ADA"
+    aliases: ["cardano", "ada"]
+    company_name: "Cardano"
+    sector: "Cryptocurrency"
+    
+  - ticker: "DOT"
+    aliases: ["polkadot", "dot"]
+    company_name: "Polkadot"
+    sector: "Cryptocurrency"
+    
+  - ticker: "LINK"
+    aliases: ["chainlink", "link"]
+    company_name: "Chainlink"
+    sector: "Cryptocurrency"
+    
+  - ticker: "LTC"
+    aliases: ["litecoin", "ltc"]
+    company_name: "Litecoin"
+    sector: "Cryptocurrency"
+    
+  - ticker: "XRP"
+    aliases: ["ripple", "xrp"]
+    company_name: "Ripple"
+    sector: "Cryptocurrency"
+
+# Meme Stocks
+meme_stocks:
+  - ticker: "GME"
+    aliases: ["gamestop", "game stop", "gme"]
+    company_name: "GameStop Corp."
+    sector: "Consumer Discretionary"
+    
+  - ticker: "AMC"
+    aliases: ["amc entertainment", "amc", "amc theaters"]
+    company_name: "AMC Entertainment Holdings Inc."
+    sector: "Communication Services"
+    
+  - ticker: "BBBY"
+    aliases: ["bed bath & beyond", "bed bath and beyond", "bbby"]
+    company_name: "Bed Bath & Beyond Inc."
+    sector: "Consumer Discretionary"
+    
+  - ticker: "NOK"
+    aliases: ["nokia", "nokia corporation", "nok"]
+    company_name: "Nokia Corporation"
+    sector: "Technology"
+
+# AI and Tech Growth
+ai_tech:
+  - ticker: "AI"
+    aliases: ["c3.ai", "c3ai", "ai"]
+    company_name: "C3.ai Inc."
+    sector: "Technology"
+    
+  - ticker: "PATH"
+    aliases: ["ui path", "uipath", "path"]
+    company_name: "UiPath Inc."
+    sector: "Technology"
+    
+  - ticker: "CRWD"
+    aliases: ["crowdstrike", "crowd strike", "crwd"]
+    company_name: "CrowdStrike Holdings Inc."
+    sector: "Technology"
+    
+  - ticker: "ZS"
+    aliases: ["zscaler", "z scaler", "zs"]
+    company_name: "Zscaler Inc."
+    sector: "Technology"
+    
+  - ticker: "NET"
+    aliases: ["cloudflare", "cloud flare", "net"]
+    company_name: "Cloudflare Inc."
+    sector: "Technology"
+
+# Electric Vehicles
+ev_stocks:
+  - ticker: "NIO"
+    aliases: ["nio inc", "nio"]
+    company_name: "NIO Inc."
+    sector: "Consumer Discretionary"
+    
+  - ticker: "XPEV"
+    aliases: ["xpeng", "xpeng inc", "xpev"]
+    company_name: "XPeng Inc."
+    sector: "Consumer Discretionary"
+    
+  - ticker: "LI"
+    aliases: ["li auto", "li"]
+    company_name: "Li Auto Inc."
+    sector: "Consumer Discretionary"
+    
+  - ticker: "RIVN"
+    aliases: ["rivian", "rivian automotive", "rivn"]
+    company_name: "Rivian Automotive Inc."
+    sector: "Consumer Discretionary"
+    
+  - ticker: "LCID"
+    aliases: ["lucid", "lucid motors", "lucid group", "lcid"]
+    company_name: "Lucid Group Inc."
+    sector: "Consumer Discretionary"
+
+# Semiconductor Companies
+semiconductors:
+  - ticker: "AMD"
+    aliases: ["advanced micro devices", "amd"]
+    company_name: "Advanced Micro Devices Inc."
+    sector: "Technology"
+    
+  - ticker: "INTC"
+    aliases: ["intel", "intel corporation", "intc"]
+    company_name: "Intel Corporation"
+    sector: "Technology"
+    
+  - ticker: "TSM"
+    aliases: ["tsmc", "taiwan semiconductor", "tsm"]
+    company_name: "Taiwan Semiconductor Manufacturing Co."
+    sector: "Technology"
+    
+  - ticker: "QCOM"
+    aliases: ["qualcomm", "qualcomm inc", "qcom"]
+    company_name: "Qualcomm Inc."
+    sector: "Technology"
+    
+  - ticker: "AVGO"
+    aliases: ["broadcom", "broadcom inc", "avgo"]
+    company_name: "Broadcom Inc."
+    sector: "Technology"
+    
+  - ticker: "MU"
+    aliases: ["micron", "micron technology", "mu"]
+    company_name: "Micron Technology Inc."
+    sector: "Technology"
+
+# Streaming and Entertainment
+streaming:
+  - ticker: "DIS"
+    aliases: ["disney", "walt disney", "dis"]
+    company_name: "Walt Disney Co."
+    sector: "Communication Services"
+    
+  - ticker: "CMCSA"
+    aliases: ["comcast", "comcast corporation", "cmcsa"]
+    company_name: "Comcast Corporation"
+    sector: "Communication Services"
+    
+  - ticker: "PARA"
+    aliases: ["paramount", "paramount global", "para"]
+    company_name: "Paramount Global"
+    sector: "Communication Services"
+    
+  - ticker: "WBD"
+    aliases: ["warner bros discovery", "warner bros", "wbd"]
+    company_name: "Warner Bros. Discovery Inc."
+    sector: "Communication Services"
+
+# E-commerce and Retail
+ecommerce:
+  - ticker: "SHOP"
+    aliases: ["shopify", "shopify inc", "shop"]
+    company_name: "Shopify Inc."
+    sector: "Technology"
+    
+  - ticker: "EBAY"
+    aliases: ["ebay", "ebay inc"]
+    company_name: "eBay Inc."
+    sector: "Consumer Discretionary"
+    
+  - ticker: "ETSY"
+    aliases: ["etsy", "etsy inc"]
+    company_name: "Etsy Inc."
+    sector: "Consumer Discretionary"
+    
+  - ticker: "BABA"
+    aliases: ["alibaba", "alibaba group", "baba"]
+    company_name: "Alibaba Group Holding Ltd."
+    sector: "Consumer Discretionary"
+    
+  - ticker: "JD"
+    aliases: ["jd.com", "jingdong", "jd"]
+    company_name: "JD.com Inc."
+    sector: "Consumer Discretionary"
+    
+  - ticker: "PDD"
+    aliases: ["pinduoduo", "pdd holdings", "pdd"]
+    company_name: "PDD Holdings Inc."
+    sector: "Consumer Discretionary"
+
+# Social Media and Communication
+social_media:
+  - ticker: "SNAP"
+    aliases: ["snapchat", "snap inc", "snap"]
+    company_name: "Snap Inc."
+    sector: "Communication Services"
+    
+  - ticker: "PINS"
+    aliases: ["pinterest", "pinterest inc", "pins"]
+    company_name: "Pinterest Inc."
+    sector: "Communication Services"
+    
+  - ticker: "TWTR"
+    aliases: ["twitter", "twitter inc", "twtr"]
+    company_name: "Twitter Inc."
+    sector: "Communication Services"
+    
+  - ticker: "SPOT"
+    aliases: ["spotify", "spotify technology", "spot"]
+    company_name: "Spotify Technology S.A."
+    sector: "Communication Services"
+    
+  - ticker: "ZM"
+    aliases: ["zoom", "zoom video communications", "zm"]
+    company_name: "Zoom Video Communications Inc."
+    sector: "Technology"
+
+# Biotech and Pharmaceuticals
+biotech:
+  - ticker: "MRNA"
+    aliases: ["moderna", "moderna inc", "mrna"]
+    company_name: "Moderna Inc."
+    sector: "Healthcare"
+    
+  - ticker: "BNTX"
+    aliases: ["biontech", "biontech se", "bntx"]
+    company_name: "BioNTech SE"
+    sector: "Healthcare"
+    
+  - ticker: "GILD"
+    aliases: ["gilead", "gilead sciences", "gild"]
+    company_name: "Gilead Sciences Inc."
+    sector: "Healthcare"
+    
+  - ticker: "REGN"
+    aliases: ["regeneron", "regeneron pharmaceuticals", "regn"]
+    company_name: "Regeneron Pharmaceuticals Inc."
+    sector: "Healthcare"
+    
+  - ticker: "VRTX"
+    aliases: ["vertex", "vertex pharmaceuticals", "vrtx"]
+    company_name: "Vertex Pharmaceuticals Inc."
+    sector: "Healthcare"
+
+# Clean Energy and ESG
+clean_energy:
+  - ticker: "ENPH"
+    aliases: ["enphase", "enphase energy", "enph"]
+    company_name: "Enphase Energy Inc."
+    sector: "Technology"
+    
+  - ticker: "SEDG"
+    aliases: ["solaredge", "solar edge", "sedg"]
+    company_name: "SolarEdge Technologies Inc."
+    sector: "Technology"
+    
+  - ticker: "RUN"
+    aliases: ["sunrun", "sunrun inc", "run"]
+    company_name: "Sunrun Inc."
+    sector: "Technology"
+    
+  - ticker: "PLUG"
+    aliases: ["plug power", "plug", "plugp"]
+    company_name: "Plug Power Inc."
+    sector: "Industrials"
+    
+  - ticker: "FCEL"
+    aliases: ["fuelcell", "fuel cell energy", "fcel"]
+    company_name: "FuelCell Energy Inc."
+    sector: "Industrials"
+    
+  - ticker: "BLDP"
+    aliases: ["ballard", "ballard power", "bldp"]
+    company_name: "Ballard Power Systems Inc."
+    sector: "Industrials"
+
+# Gaming and Entertainment
+gaming:
+  - ticker: "ATVI"
+    aliases: ["activision blizzard", "activision", "atvi"]
+    company_name: "Activision Blizzard Inc."
+    sector: "Communication Services"
+    
+  - ticker: "EA"
+    aliases: ["electronic arts", "ea sports", "ea"]
+    company_name: "Electronic Arts Inc."
+    sector: "Communication Services"
+    
+  - ticker: "TTWO"
+    aliases: ["take two", "take-two interactive", "ttwo"]
+    company_name: "Take-Two Interactive Software Inc."
+    sector: "Communication Services"
+    
+  - ticker: "ZNGA"
+    aliases: ["zynga", "zynga inc", "znga"]
+    company_name: "Zynga Inc."
+    sector: "Communication Services"
+    
+  - ticker: "ROKU"
+    aliases: ["roku", "roku inc"]
+    company_name: "Roku Inc."
+    sector: "Communication Services"
+
+# Financial Technology (FinTech)
+fintech:
+  - ticker: "SQ"
+    aliases: ["square", "square inc", "block", "sq"]
+    company_name: "Block Inc."
+    sector: "Technology"
+    
+  - ticker: "PYPL"
+    aliases: ["paypal", "paypal holdings", "pypl"]
+    company_name: "PayPal Holdings Inc."
+    sector: "Technology"
+    
+  - ticker: "COIN"
+    aliases: ["coinbase", "coinbase global", "coin"]
+    company_name: "Coinbase Global Inc."
+    sector: "Financial Services"
+    
+  - ticker: "AFRM"
+    aliases: ["affirm", "affirm holdings", "afrm"]
+    company_name: "Affirm Holdings Inc."
+    sector: "Technology"
+    
+  - ticker: "UPST"
+    aliases: ["upstart", "upstart holdings", "upst"]
+    company_name: "Upstart Holdings Inc."
+    sector: "Technology"
+    
+  - ticker: "SOFI"
+    aliases: ["sofi", "sofi technologies", "sofi"]
+    company_name: "SoFi Technologies Inc."
+    sector: "Financial Services"
+
+# Real Estate and REITs
+real_estate:
+  - ticker: "VNQ"
+    aliases: ["vanguard real estate etf", "real estate etf", "vnq"]
+    company_name: "Vanguard Real Estate ETF"
+    sector: "ETF"
+    
+  - ticker: "IYR"
+    aliases: ["ishares u.s. real estate etf", "real estate etf", "iyr"]
+    company_name: "iShares U.S. Real Estate ETF"
+    sector: "ETF"
+    
+  - ticker: "SCHH"
+    aliases: ["schwab u.s. reit etf", "reit etf", "schh"]
+    company_name: "Schwab U.S. REIT ETF"
+    sector: "ETF"
+
+# Commodities and Materials
+commodities:
+  - ticker: "GLD"
+    aliases: ["spdr gold trust", "gold etf", "gld"]
+    company_name: "SPDR Gold Trust"
+    sector: "ETF"
+    
+  - ticker: "SLV"
+    aliases: ["ishares silver trust", "silver etf", "slv"]
+    company_name: "iShares Silver Trust"
+    sector: "ETF"
+    
+  - ticker: "USO"
+    aliases: ["united states oil fund", "oil etf", "uso"]
+    company_name: "United States Oil Fund LP"
+    sector: "ETF"
+    
+  - ticker: "UNG"
+    aliases: ["united states natural gas fund", "natural gas etf", "ung"]
+    company_name: "United States Natural Gas Fund LP"
+    sector: "ETF"
+
+# Volatility and Inverse ETFs
+volatility:
+  - ticker: "UVXY"
+    aliases: ["proshares ultra vix short-term futures etf", "vix etf", "uvxy"]
+    company_name: "ProShares Ultra VIX Short-Term Futures ETF"
+    sector: "ETF"
+    
+  - ticker: "VXX"
+    aliases: ["ipath series b s&p 500 vix short-term futures etn", "vix etn", "vxx"]
+    company_name: "iPath Series B S&P 500 VIX Short-Term Futures ETN"
+    sector: "ETF"
+    
+  - ticker: "VIXY"
+    aliases: ["proshares vix short-term futures etf", "vix short-term", "vixy"]
+    company_name: "ProShares VIX Short-Term Futures ETF"
+    sector: "ETF"
+
+# International Markets
+international:
+  - ticker: "EFA"
+    aliases: ["ishares msci eafe etf", "international etf", "efa"]
+    company_name: "iShares MSCI EAFE ETF"
+    sector: "ETF"
+    
+  - ticker: "EEM"
+    aliases: ["ishares msci emerging markets etf", "emerging markets etf", "eem"]
+    company_name: "iShares MSCI Emerging Markets ETF"
+    sector: "ETF"
+    
+  - ticker: "FXI"
+    aliases: ["ishares china large-cap etf", "china etf", "fxi"]
+    company_name: "iShares China Large-Cap ETF"
+    sector: "ETF"
+    
+  - ticker: "EWJ"
+    aliases: ["ishares msci japan etf", "japan etf", "ewj"]
+    company_name: "iShares MSCI Japan ETF"
+    sector: "ETF"
+    
+  - ticker: "EWU"
+    aliases: ["ishares msci united kingdom etf", "uk etf", "ewu"]
+    company_name: "iShares MSCI United Kingdom ETF"
+    sector: "ETF"
+    
+  - ticker: "EWG"
+    aliases: ["ishares msci germany etf", "germany etf", "ewg"]
+    company_name: "iShares MSCI Germany ETF"
+    sector: "ETF"
+
+# Bond ETFs
+bonds:
+  - ticker: "TLT"
+    aliases: ["ishares 20+ year treasury bond etf", "long term treasury", "tlt"]
+    company_name: "iShares 20+ Year Treasury Bond ETF"
+    sector: "ETF"
+    
+  - ticker: "IEF"
+    aliases: ["ishares 7-10 year treasury bond etf", "intermediate treasury", "ief"]
+    company_name: "iShares 7-10 Year Treasury Bond ETF"
+    sector: "ETF"
+    
+  - ticker: "SHY"
+    aliases: ["ishares 1-3 year treasury bond etf", "short term treasury", "shy"]
+    company_name: "iShares 1-3 Year Treasury Bond ETF"
+    sector: "ETF"
+    
+  - ticker: "LQD"
+    aliases: ["ishares iboxx $ investment grade corporate bond etf", "corporate bonds", "lqd"]
+    company_name: "iShares iBoxx $ Investment Grade Corporate Bond ETF"
+    sector: "ETF"
+    
+  - ticker: "HYG"
+    aliases: ["ishares iboxx $ high yield corporate bond etf", "high yield bonds", "hyg"]
+    company_name: "iShares iBoxx $ High Yield Corporate Bond ETF"
+    sector: "ETF"
+
+# Sector ETFs
+sector_etfs:
+  - ticker: "XLK"
+    aliases: ["technology select sector spdr fund", "tech etf", "xlk"]
+    company_name: "Technology Select Sector SPDR Fund"
+    sector: "ETF"
+    
+  - ticker: "XLF"
+    aliases: ["financial select sector spdr fund", "financial etf", "xlf"]
+    company_name: "Financial Select Sector SPDR Fund"
+    sector: "ETF"
+    
+  - ticker: "XLE"
+    aliases: ["energy select sector spdr fund", "energy etf", "xle"]
+    company_name: "Energy Select Sector SPDR Fund"
+    sector: "ETF"
+    
+  - ticker: "XLV"
+    aliases: ["health care select sector spdr fund", "healthcare etf", "xlv"]
+    company_name: "Health Care Select Sector SPDR Fund"
+    sector: "ETF"
+    
+  - ticker: "XLI"
+    aliases: ["industrial select sector spdr fund", "industrial etf", "xli"]
+    company_name: "Industrial Select Sector SPDR Fund"
+    sector: "ETF"
+    
+  - ticker: "XLP"
+    aliases: ["consumer staples select sector spdr fund", "consumer staples etf", "xlp"]
+    company_name: "Consumer Staples Select Sector SPDR Fund"
+    sector: "ETF"
+    
+  - ticker: "XLY"
+    aliases: ["consumer discretionary select sector spdr fund", "consumer discretionary etf", "xly"]
+    company_name: "Consumer Discretionary Select Sector SPDR Fund"
+    sector: "ETF"
+    
+  - ticker: "XLU"
+    aliases: ["utilities select sector spdr fund", "utilities etf", "xlu"]
+    company_name: "Utilities Select Sector SPDR Fund"
+    sector: "ETF"
+    
+  - ticker: "XLB"
+    aliases: ["materials select sector spdr fund", "materials etf", "xlb"]
+    company_name: "Materials Select Sector SPDR Fund"
+    sector: "ETF"
+    
+  - ticker: "XLRE"
+    aliases: ["real estate select sector spdr fund", "real estate etf", "xlre"]
+    company_name: "Real Estate Select Sector SPDR Fund"
+    sector: "ETF" 

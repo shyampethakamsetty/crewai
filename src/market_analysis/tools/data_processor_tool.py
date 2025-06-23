@@ -24,6 +24,21 @@ class DataProcessorTool(BaseTool):
     def _run(self, raw_data_file: str = "output/raw_youtube_data.json", transcripts_dir: str = "transcripts/", output_dir: str = "output") -> str:
         """Execute data processing from raw data files."""
         try:
+            # Check if output file already exists
+            processed_file = f"{output_dir}/youtube_processed.json"
+            if os.path.exists(processed_file):
+                # Load existing file and return skip status
+                existing_stats = self._get_existing_file_stats(processed_file)
+                return json.dumps({
+                    "status": "skipped",
+                    "reason": "Output file already exists",
+                    "processing_time": datetime.now().isoformat(),
+                    "processed_file": processed_file,
+                    "output_directory": output_dir,
+                    "existing_statistics": existing_stats,
+                    "summary": f"Skipped processing - found existing file with {existing_stats.get('total_videos_collected', 0)} videos"
+                }, indent=2)
+            
             # Load raw data from file (now from the date-based directory)
             raw_data = self._load_raw_data(f"{output_dir}/raw_youtube_data.json")
             if not raw_data:
@@ -37,7 +52,6 @@ class DataProcessorTool(BaseTool):
             normalized_data = self._create_simplified_normalized_data(raw_data)
             
             # Save normalized data
-            processed_file = f"{output_dir}/youtube_processed.json"
             self._save_simplified_data_with_stats(normalized_data, raw_data, processed_file)
             
             # Generate basic statistics
@@ -69,6 +83,25 @@ class DataProcessorTool(BaseTool):
         except Exception as e:
             print(f"Error loading raw data file {raw_data_file}: {e}")
             return None
+
+    def _get_existing_file_stats(self, output_file: str) -> Dict:
+        """Get statistics from existing output file."""
+        try:
+            with open(output_file, 'r', encoding='utf-8') as f:
+                existing_data = json.load(f)
+            
+            # Extract statistics from the existing file structure
+            if isinstance(existing_data, dict):
+                return {
+                    "total_videos_collected": existing_data.get("total_videos_collected", 0),
+                    "total_transcripts_collected": existing_data.get("total_transcripts_collected", 0),
+                    "total_transcript_hours": existing_data.get("total_transcript_hours", 0.0),
+                    "data_records": len(existing_data.get("data", []))
+                }
+            else:
+                return {"error": "Invalid file format", "total_videos_collected": 0}
+        except Exception as e:
+            return {"error": f"Could not read existing file: {str(e)}", "total_videos_collected": 0}
 
     def _create_simplified_normalized_data(self, raw_data: List[Dict]) -> List[Dict]:
         """Create simplified normalized data structure with only source, trader, data."""

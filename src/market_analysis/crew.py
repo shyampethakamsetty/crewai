@@ -6,6 +6,8 @@ from typing import List
 
 from .tools.youtube_collection_tool import YouTubeCollectionTool
 from .tools.data_processor_tool import DataProcessorTool
+from .tools.sentence_processor_tool import SentenceProcessorTool
+from .tools.ticker_tagger_tool import TickerTaggerTool
 
 @CrewBase
 class DataCollectionCrew():
@@ -30,6 +32,22 @@ class DataCollectionCrew():
             tools=[DataProcessorTool()]
         )
 
+    @agent
+    def sentence_processor(self) -> Agent:
+        return Agent(
+            config=self.agents_config['sentence_processor'],
+            verbose=True,
+            tools=[SentenceProcessorTool()]
+        )
+
+    @agent
+    def ticker_tagger(self) -> Agent:
+        return Agent(
+            config=self.agents_config['ticker_tagger'],
+            verbose=True,
+            tools=[TickerTaggerTool()]
+        )
+
     @task
     def youtube_collection_task(self) -> Task:
         return Task(
@@ -40,6 +58,18 @@ class DataCollectionCrew():
     def data_processing_task(self) -> Task:
         return Task(
             config=self.tasks_config['data_processing_task']
+        )
+
+    @task
+    def sentence_processing_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['sentence_processing_task']
+        )
+
+    @task
+    def ticker_tagging_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['ticker_tagging_task']
         )
 
     @crew

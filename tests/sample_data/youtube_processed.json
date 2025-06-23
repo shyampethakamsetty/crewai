@@ -1,0 +1,12 @@
+{
+  "data": [
+    {
+      "source": "youtube",
+      "trader": "test_channel",
+      "data": "Tesla is looking good. TSLA should hit $300 soon. Apple is also strong."
+    }
+  ],
+  "total_transcript_hours": 1.0,
+  "total_videos_collected": 1,
+  "total_transcripts_collected": 1
+}

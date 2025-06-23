@@ -1,0 +1,192 @@
+# Asset Mapping Configuration for Ticker Attribution
+# This YAML file maps ticker symbols to their common aliases and related terms
+
+# Individual Stocks - Major Companies
+stocks:
+  TSLA:
+    aliases: ["tesla", "tesla motors", "elon musk", "model 3", "model s", "model x", "model y", "cybertruck", "spacex", "gigafactory"]
+    sector: "Electric Vehicles/Technology"
+  
+  AAPL:
+    aliases: ["apple", "iphone", "mac", "macbook", "ipad", "apple watch", "tim cook", "ios", "macos", "app store"]
+    sector: "Technology"
+  
+  MSFT:
+    aliases: ["microsoft", "windows", "xbox", "office", "azure", "teams", "surface", "satya nadella"]
+    sector: "Technology"
+  
+  GOOGL:
+    aliases: ["google", "alphabet", "youtube", "android", "chrome", "gmail", "google cloud", "search", "sundar pichai"]
+    sector: "Technology"
+  
+  AMZN:
+    aliases: ["amazon", "aws", "prime", "alexa", "kindle", "jeff bezos", "andy jassy", "e-commerce"]
+    sector: "E-commerce/Cloud"
+  
+  META:
+    aliases: ["meta", "facebook", "instagram", "whatsapp", "metaverse", "mark zuckerberg", "oculus", "threads"]
+    sector: "Social Media"
+  
+  NVDA:
+    aliases: ["nvidia", "gpu", "graphics card", "ai chips", "jensen huang", "rtx", "geforce", "data center"]
+    sector: "Semiconductors"
+  
+  NFLX:
+    aliases: ["netflix", "streaming", "reed hastings", "original content", "binge watching"]
+    sector: "Entertainment"
+  
+  CRM:
+    aliases: ["salesforce", "crm", "marc benioff", "cloud software", "customer relationship"]
+    sector: "Software"
+  
+  COIN:
+    aliases: ["coinbase", "crypto exchange", "brian armstrong", "cryptocurrency trading"]
+    sector: "Cryptocurrency"
+  
+  PLTR:
+    aliases: ["palantir", "palanteer", "pltr", "data analytics", "government software", "peter thiel"]
+    sector: "Software/Data Analytics"
+
+# Major Indices
+indices:
+  SPY:
+    aliases: ["s&p 500", "sp500", "spx", "standard and poor", "market index", "spy etf"]
+    type: "ETF - S&P 500"
+  
+  QQQ:
+    aliases: ["nasdaq 100", "qqq etf", "tech stocks", "nasdaq index", "triple q"]
+    type: "ETF - NASDAQ 100"
+  
+  DIA:
+    aliases: ["dow jones", "djia", "dow", "industrial average", "dow 30"]
+    type: "ETF - Dow Jones"
+  
+  IWM:
+    aliases: ["russell 2000", "small cap", "iwm etf", "small companies"]
+    type: "ETF - Russell 2000"
+  
+  VTI:
+    aliases: ["total stock market", "vanguard total", "entire market", "broad market"]
+    type: "ETF - Total Market"
+
+# Sector ETFs
+sector_etfs:
+  XLK:
+    aliases: ["technology sector", "tech etf", "xlk fund", "technology spdr"]
+    sector: "Technology"
+  
+  XLF:
+    aliases: ["financial sector", "banks", "xlf fund", "financial spdr"]
+    sector: "Financial"
+  
+  XLE:
+    aliases: ["energy sector", "oil", "gas", "xle fund", "energy spdr"]
+    sector: "Energy"
+  
+  XLV:
+    aliases: ["healthcare sector", "pharma", "xlv fund", "healthcare spdr"]
+    sector: "Healthcare"
+  
+  XLI:
+    aliases: ["industrial sector", "manufacturing", "xli fund", "industrial spdr"]
+    sector: "Industrial"
+
+# Cryptocurrency
+crypto:
+  BTC:
+    aliases: ["bitcoin", "btc", "cryptocurrency", "digital currency", "satoshi", "blockchain"]
+    type: "Cryptocurrency"
+  
+  ETH:
+    aliases: ["ethereum", "eth", "ether", "smart contracts", "defi", "vitalik"]
+    type: "Cryptocurrency"
+  
+  SOL:
+    aliases: ["solana", "sol token", "solana blockchain", "sol crypto"]
+    type: "Cryptocurrency"
+  
+  ADA:
+    aliases: ["cardano", "ada token", "cardano blockchain"]
+    type: "Cryptocurrency"
+
+# Commodities
+commodities:
+  GLD:
+    aliases: ["gold", "precious metals", "gld etf", "gold bullion"]
+    type: "Precious Metals"
+  
+  SLV:
+    aliases: ["silver", "slv etf", "silver bullion", "precious metal"]
+    type: "Precious Metals"
+  
+  USO:
+    aliases: ["oil", "crude oil", "uso etf", "petroleum", "wti"]
+    type: "Energy"
+  
+  UNG:
+    aliases: ["natural gas", "ung etf", "gas prices"]
+    type: "Energy"
+
+# Foreign Exchange / Currency ETFs
+forex:
+  UUP:
+    aliases: ["us dollar", "dollar index", "uup etf", "dollar strength", "dxy"]
+    type: "Currency"
+  
+  FXE:
+    aliases: ["euro", "european currency", "fxe etf", "eurozone"]
+    type: "Currency"
+
+# Economic Indicators & Market Terms (not tradeable but important for context)
+indicators:
+  VIX:
+    aliases: ["volatility index", "fear index", "market fear", "volatility"]
+    type: "Market Indicator"
+  
+  YIELD:
+    aliases: ["10 year treasury", "bond yield", "interest rates", "treasury bonds", "tnx"]
+    type: "Fixed Income"
+  
+  INFLATION:
+    aliases: ["cpi", "consumer price index", "pce", "inflation rate", "fed policy"]
+    type: "Economic Indicator"
+
+# Special Categories
+meme_stocks:
+  GME:
+    aliases: ["gamestop", "gme stock", "ryan cohen", "gaming retailer"]
+    sector: "Retail"
+  
+  AMC:
+    aliases: ["amc entertainment", "movie theaters", "cinema", "amc stock"]
+    sector: "Entertainment"
+
+# Real Estate
+real_estate:
+  VNQ:
+    aliases: ["real estate", "reit", "vnq etf", "property", "real estate investment trust"]
+    type: "Real Estate"
+
+# International Markets
+international:
+  EEM:
+    aliases: ["emerging markets", "eem etf", "developing countries", "international stocks"]
+    type: "International"
+  
+  EFA:
+    aliases: ["developed markets", "efa etf", "europe", "international developed"]
+    type: "International"
+  
+  FXI:
+    aliases: ["china", "chinese stocks", "fxi etf", "china large cap"]
+    type: "International"
+
+# Bond ETFs
+bonds:
+  TLT:
+    aliases: ["long term treasury", "tlt etf", "20+ year treasury", "government bonds"]
+    type: "Government Bonds"
+  
+  HYG:
+    aliases: ["high yield", "junk bonds", "hyg etf", "corporate bonds"]
+    type: "Corporate Bonds" 

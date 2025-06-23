@@ -1,0 +1,72 @@
+2025-06-23 07:48:58,248 - __main__ - INFO - Starting Advanced Market Analysis Pipeline
+2025-06-23 07:48:58,248 - __main__ - INFO - Input file: output/20250623/youtube_processed.json
+2025-06-23 07:48:58,248 - __main__ - INFO - Config file: None
+2025-06-23 07:48:58,248 - __main__ - INFO - Output directory: None
+2025-06-23 07:51:17,949 - huggingface_hub.file_download - WARNING - Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+2025-06-23 07:53:49,866 - market_analysis.tools.advanced_data_processor - INFO - Starting advanced processing of output/20250623/youtube_processed.json
+2025-06-23 07:53:49,869 - market_analysis.tools.advanced_sentence_processor - INFO - Processing transcript for Lee Lowell - The Smart Option Seller using advanced sentence processor
+2025-06-23 07:53:49,983 - market_analysis.tools.advanced_data_processor - ERROR - Error processing transcript for Lee Lowell - The Smart Option Seller: float division by zero
+2025-06-23 07:53:49,985 - market_analysis.tools.advanced_data_processor - INFO - Advanced processing completed successfully. Output saved to output\advanced_processed_20250623.json
+2025-06-23 07:53:50,116 - __main__ - INFO - Output file: output\advanced_processed_20250623.json
+2025-06-23 07:53:50,116 - __main__ - INFO - Processing time: 0.12 seconds
+2025-06-23 07:53:50,116 - __main__ - INFO - Records processed: 0
+2025-06-23 07:53:50,122 - __main__ - INFO - Confidence score: 0.000
+2025-06-23 07:53:50,127 - __main__ - INFO -   Total processed: 1
+2025-06-23 07:53:50,129 - __main__ - INFO -   Success rate: 100.00%
+2025-06-23 07:53:50,129 - __main__ - INFO -   Average confidence: 0.000
+2025-06-23 07:53:50,129 - __main__ - INFO -   Average processing time: 0.12s
+2025-06-23 07:55:10,787 - __main__ - INFO - Starting Advanced Market Analysis Pipeline
+2025-06-23 07:55:10,787 - __main__ - INFO - Input file: output/20250623/youtube_processed.json
+2025-06-23 07:55:10,787 - __main__ - INFO - Config file: None
+2025-06-23 07:55:10,787 - __main__ - INFO - Output directory: None
+2025-06-23 07:55:26,374 - market_analysis.tools.advanced_data_processor - INFO - Starting advanced processing of output/20250623/youtube_processed.json
+2025-06-23 07:55:26,396 - market_analysis.tools.advanced_sentence_processor - INFO - Processing transcript for Lee Lowell - The Smart Option Seller using advanced sentence processor
+2025-06-23 07:55:26,426 - market_analysis.tools.advanced_data_processor - ERROR - Error processing transcript for Lee Lowell - The Smart Option Seller: float division by zero
+2025-06-23 07:55:26,428 - market_analysis.tools.advanced_data_processor - INFO - Advanced processing completed successfully. Output saved to output\advanced_processed_20250623.json
+2025-06-23 07:55:26,502 - __main__ - INFO - Output file: output\advanced_processed_20250623.json
+2025-06-23 07:55:26,502 - __main__ - INFO - Processing time: 0.05 seconds
+2025-06-23 07:55:26,502 - __main__ - INFO - Records processed: 0
+2025-06-23 07:55:26,503 - __main__ - INFO - Confidence score: 0.000
+2025-06-23 07:55:26,508 - __main__ - INFO -   Total processed: 1
+2025-06-23 07:55:26,509 - __main__ - INFO -   Success rate: 100.00%
+2025-06-23 07:55:26,509 - __main__ - INFO -   Average confidence: 0.000
+2025-06-23 07:55:26,509 - __main__ - INFO -   Average processing time: 0.05s
+2025-06-23 07:58:02,576 - __main__ - INFO - Starting Advanced Market Analysis Pipeline
+2025-06-23 07:58:02,576 - __main__ - INFO - Input file: output/20250623/youtube_processed.json
+2025-06-23 07:58:02,576 - __main__ - INFO - Config file: None
+2025-06-23 07:58:02,580 - __main__ - INFO - Output directory: None
+2025-06-23 07:58:19,030 - market_analysis.tools.advanced_data_processor - INFO - Starting advanced processing of output/20250623/youtube_processed.json
+2025-06-23 07:58:19,053 - market_analysis.tools.advanced_sentence_processor - INFO - Processing transcript for Lee Lowell - The Smart Option Seller using advanced sentence processor
+2025-06-23 07:58:19,082 - market_analysis.tools.advanced_ticker_tagger - INFO - Tagging 0 sentences for Lee Lowell - The Smart Option Seller using advanced ticker tagger
+2025-06-23 07:58:19,085 - market_analysis.tools.advanced_data_processor - INFO - Advanced processing completed successfully. Output saved to output\advanced_processed_20250623.json
+2025-06-23 07:58:19,085 - __main__ - INFO - SUCCESS: Advanced processing completed successfully!
+2025-06-23 07:58:19,087 - __main__ - INFO - Output file: output\advanced_processed_20250623.json
+2025-06-23 07:58:19,087 - __main__ - INFO - Processing time: 0.06 seconds
+2025-06-23 07:58:19,087 - __main__ - INFO - Records processed: 1
+2025-06-23 07:58:19,087 - __main__ - INFO - Confidence score: 0.000
+2025-06-23 07:58:19,089 - __main__ - INFO - STATISTICS:
+2025-06-23 07:58:19,089 - __main__ - INFO -   Total processed: 1
+2025-06-23 07:58:19,091 - __main__ - INFO -   Success rate: 100.00%
+2025-06-23 07:58:19,091 - __main__ - INFO -   Average confidence: 0.000
+2025-06-23 07:58:19,092 - __main__ - INFO -   Average processing time: 0.06s
+2025-06-23 08:01:09,933 - __main__ - INFO - Starting Advanced Market Analysis Pipeline
+2025-06-23 08:01:09,933 - __main__ - INFO - Input file: output/20250623/youtube_processed.json
+2025-06-23 08:01:09,933 - __main__ - INFO - Config file: None
+2025-06-23 08:01:09,933 - __main__ - INFO - Output directory: None
+2025-06-23 08:01:25,371 - market_analysis.tools.advanced_data_processor - INFO - Starting advanced processing of output/20250623/youtube_processed.json
+2025-06-23 08:01:25,381 - market_analysis.tools.advanced_sentence_processor - INFO - Processing transcript for Lee Lowell - The Smart Option Seller using advanced sentence processor
+2025-06-23 08:09:13,726 - __main__ - INFO - Starting Advanced Market Analysis Pipeline
+2025-06-23 08:09:13,726 - __main__ - INFO - Input file: output/20250623/youtube_processed.json
+2025-06-23 08:09:13,726 - __main__ - INFO - Config file: None
+2025-06-23 08:09:13,726 - __main__ - INFO - Output directory: None
+2025-06-23 08:09:34,631 - market_analysis.tools.advanced_data_processor - INFO - Starting advanced processing of output/20250623/youtube_processed.json
+2025-06-23 08:09:34,637 - market_analysis.tools.advanced_data_processor - INFO - Step 1: Loading input data...
+2025-06-23 08:09:34,639 - market_analysis.tools.advanced_data_processor - INFO - Loaded 1 records from input file
+2025-06-23 08:09:34,639 - market_analysis.tools.advanced_data_processor - INFO - Step 2: Processing 1 transcripts...
+2025-06-23 08:09:34,639 - market_analysis.tools.advanced_data_processor - INFO - Processing item 1/1: Lee Lowell - The Smart Option Seller
+2025-06-23 08:09:34,639 - market_analysis.tools.advanced_data_processor - INFO - Processing transcript for Lee Lowell - The Smart Option Seller - Step 1: Sentence processing
+2025-06-23 08:09:34,639 - market_analysis.tools.advanced_sentence_processor - INFO - Processing transcript for Lee Lowell - The Smart Option Seller using advanced sentence processor
+2025-06-23 08:09:34,639 - market_analysis.tools.advanced_sentence_processor - INFO - Transcript length: 18152 characters
+2025-06-23 08:09:34,639 - market_analysis.tools.advanced_sentence_processor - INFO - Step 1: Preprocessing transcript...
+2025-06-23 08:12:11,972 - market_analysis.tools.advanced_sentence_processor - INFO - Cleaned transcript length: 1601887593 characters
+2025-06-23 08:12:11,985 - market_analysis.tools.advanced_sentence_processor - INFO - Step 2a: Processing with rule-based method...

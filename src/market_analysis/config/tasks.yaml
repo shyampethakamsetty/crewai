@@ -45,3 +45,78 @@ data_processing_task:
   agent: data_processor
   context:
     - youtube_collection_task
+
+sentence_processing_task:
+  description: >
+    Apply intelligent sentence boundary detection to processed transcript data:
+    1. Read processed data from: output/20250623/youtube_processed.json
+    2. Apply financial context-aware sentence splitting to each transcript
+    3. Preserve financial numbers, percentages, ticker symbols, and terminology
+    4. Filter out filler words, artifacts, and low-quality content
+    5. Save sentence-processed data to: output/20250623/sentences_processed.json
+    6. Return processing statistics and quality metrics
+    
+    Use the Financial Context-Aware Sentence Processor tool for intelligent processing.
+    Focus on preserving financial meaning while creating clean sentence boundaries.
+    IMPORTANT: Maintain original transcript for reference alongside processed sentences.
+    IMPORTANT: Use the output_dir parameter when calling the Sentence Processor tool.
+    The parameters should be: {"processed_data_file": "output/20250623/youtube_processed.json", "output_dir": "output/20250623"}
+  expected_output: >
+    Sentence processing summary containing:
+    - Processing statistics (total_records, total_sentences, avg_sentences_per_record)
+    - Channel breakdown with sentence counts per trader
+    - Processed data file path: output/20250623/sentences_processed.json
+    - Quality metrics and processing success confirmation
+  agent: sentence_processor
+  context:
+    - data_processing_task
+
+ticker_tagging_task:
+  description: >
+    Apply intelligent ticker attribution to processed sentences with context inheritance:
+    1. Read sentence-processed data from: output/20250623/sentences_processed.json
+    2. Load asset mapping configuration from: config/asset_mapping.yaml
+    3. Analyze each sentence for ticker mentions using direct recognition and context inheritance
+    4. Handle complex cases: pronouns ("they", "it"), company names, contextual references
+    5. Tag sentences with relevant tickers, tracking context flow across sentence boundaries
+    6. Save ticker-tagged data to: output/20250623/ticker_tagged.json
+    7. Return tagging statistics and attribution summary
+    
+    Use the Intelligent Ticker Attribution tool with asset mapping configuration.
+    Focus on context inheritance: if a sentence refers to a previously mentioned ticker, inherit that context.
+    IMPORTANT: Tag sentences with ALL relevant tickers, not just the primary one.
+    IMPORTANT: Use the output_dir parameter when calling the Ticker Tagger tool.
+    The parameters should be: {"sentences_file": "output/20250623/sentences_processed.json", "asset_mapping_file": "config/asset_mapping.yaml", "output_dir": "output/20250623"}
+  expected_output: >
+    Ticker tagging summary containing:
+    - Tagging statistics (total_sentences_processed, total_ticker_attributions, attribution_rate)
+    - Ticker breakdown showing sentences per ticker symbol
+    - Context inheritance statistics (inherited_attributions vs direct_mentions)
+    - Tagged data file path: output/20250623/ticker_tagged.json
+    - Processing success confirmation with quality metrics
+  agent: ticker_tagger
+  context:
+    - sentence_processing_task
+
+parallel_sentence_processing:
+  description: "Process large transcripts using parallel processing techniques for improved performance"
+  expected_output: "JSON file containing processed sentences with metadata about parallel processing performance"
+  agent: parallel_sentence_processor
+  context: |
+    You are tasked with processing large financial transcripts using parallel processing techniques.
+    Your goal is to:
+    1. Split the transcript into manageable chunks
+    2. Process each chunk in parallel using multiple workers
+    3. Merge the results while handling overlaps correctly
+    4. Maintain financial pattern integrity during processing
+    5. Provide detailed performance metrics
+    
+    The transcript contains financial content with stock tickers, prices, percentages, and market analysis.
+    Ensure that financial patterns like "$150.50", "AAPL", "15%" are preserved during processing.
+    
+    Output should include:
+    - Processed sentences with confidence scores
+    - Processing time and performance metrics
+    - Number of chunks processed
+    - Number of workers used
+    - Any errors or warnings encountered

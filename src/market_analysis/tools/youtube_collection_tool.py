@@ -33,6 +33,21 @@ class YouTubeCollectionTool(BaseTool):
     def _run(self, config_file: str = "config/youtube_configuration.yaml", hours_back_override: int = None, video_batch_size_override: int = None, output_dir: str = "output") -> str:
         """Execute YouTube data collection from YAML configuration file."""
         try:
+            # Check if output file already exists
+            raw_data_file = f"{output_dir}/raw_youtube_data.json"
+            if os.path.exists(raw_data_file):
+                # Load existing file and return skip status
+                existing_stats = self._get_existing_file_stats(raw_data_file)
+                return json.dumps({
+                    "status": "skipped",
+                    "reason": "Output file already exists",
+                    "collection_time": datetime.now().isoformat(),
+                    "raw_data_file": raw_data_file,
+                    "output_directory": output_dir,
+                    "existing_statistics": existing_stats,
+                    "summary": f"Skipped collection - found existing file with {existing_stats.get('total_videos_collected', 0)} videos"
+                }, indent=2)
+            
             # Load and validate YouTube configuration
             config_data = self._load_youtube_config(config_file)
             if not config_data:
@@ -68,7 +83,6 @@ class YouTubeCollectionTool(BaseTool):
                 })
             
             # Save raw data to file with embedded transcripts in date-based directory
-            raw_data_file = f"{output_dir}/raw_youtube_data.json"
             collection_stats = self._save_raw_data_with_transcripts_and_get_stats(results, raw_data_file)
             
             return json.dumps({
@@ -157,6 +171,37 @@ class YouTubeCollectionTool(BaseTool):
             enabled_channels.append(channel_config)
             
         return enabled_channels
+
+    def _get_existing_file_stats(self, output_file: str) -> Dict:
+        """Get statistics from existing output file."""
+        try:
+            with open(output_file, 'r', encoding='utf-8') as f:
+                existing_data = json.load(f)
+            
+            # Calculate stats from existing data
+            total_videos = len(existing_data) if isinstance(existing_data, list) else 0
+            total_transcripts = 0
+            total_duration_seconds = 0
+            
+            if isinstance(existing_data, list):
+                for item in existing_data:
+                    # Check transcript data
+                    transcript_data = item.get("transcript_data", {})
+                    if transcript_data.get("transcript_available", False):
+                        total_transcripts += 1
+                    
+                    # Parse duration
+                    duration = item.get("video_info", {}).get("duration", "")
+                    if duration:
+                        total_duration_seconds += self._parse_duration_to_seconds(duration)
+            
+            return {
+                "total_videos_collected": total_videos,
+                "total_transcripts_collected": total_transcripts,
+                "total_transcript_hours": round(total_duration_seconds / 3600, 2)
+            }
+        except Exception as e:
+            return {"error": f"Could not read existing file: {str(e)}", "total_videos_collected": 0}
 
     def _save_raw_data_with_transcripts_and_get_stats(self, results: List[Dict], output_file: str) -> Dict:
         """Save raw collection data with embedded transcripts to file and return statistics."""

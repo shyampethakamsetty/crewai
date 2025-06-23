@@ -1,0 +1,308 @@
+{
+  "data": [
+    {
+      "source": "youtube",
+      "trader": "meet_kevin",
+      "original_transcript": "Tesla just destroyed earnings expectations...",
+      "sentences": [
+        "Tesla just destroyed earnings expectations last night.",
+        "They reported $31.2 billion in revenue versus the street estimate of $29.8 billion.",
+        "That's a solid 4.7% beat!",
+        "I'm super bullish on TSLA right now.",
+        "Looking at the technicals, we finally broke above that stubborn $250 resistance.",
+        "This breakout looks legit.",
+        "My target for Tesla is $295 over the next 2-3 months.",
+        "Now switching to Apple - AAPL had a mixed quarter.",
+        "iPhone revenue was down but services revenue grew 16%.",
+        "The stock is hovering around $185 support."
+      ],
+      "sentence_count": 10,
+      "processing_date": "2024-01-15",
+      "tagged_sentences": [
+        {
+          "sentence_id": 1,
+          "sentence": "Tesla just destroyed earnings expectations last night.",
+          "direct_tickers": [
+            "TSLA",
+            "NATGAS",
+            "SPX"
+          ],
+          "inherited_tickers": [],
+          "all_tickers": [
+            "TSLA",
+            "NATGAS",
+            "SPX"
+          ],
+          "has_tickers": true
+        },
+        {
+          "sentence_id": 2,
+          "sentence": "They reported $31.2 billion in revenue versus the street estimate of $29.8 billion.",
+          "direct_tickers": [
+            "SPX"
+          ],
+          "inherited_tickers": [],
+          "all_tickers": [
+            "SPX"
+          ],
+          "has_tickers": true
+        },
+        {
+          "sentence_id": 3,
+          "sentence": "That's a solid 4.7% beat!",
+          "direct_tickers": [
+            "SOL"
+          ],
+          "inherited_tickers": [],
+          "all_tickers": [
+            "SOL"
+          ],
+          "has_tickers": true
+        },
+        {
+          "sentence_id": 4,
+          "sentence": "I'm super bullish on TSLA right now.",
+          "direct_tickers": [
+            "TSLA"
+          ],
+          "inherited_tickers": [],
+          "all_tickers": [
+            "TSLA"
+          ],
+          "has_tickers": true
+        },
+        {
+          "sentence_id": 5,
+          "sentence": "Looking at the technicals, we finally broke above that stubborn $250 resistance.",
+          "direct_tickers": [
+            "SPX",
+            "SILVER",
+            "NATGAS"
+          ],
+          "inherited_tickers": [],
+          "all_tickers": [
+            "SPX",
+            "SILVER",
+            "NATGAS"
+          ],
+          "has_tickers": true
+        },
+        {
+          "sentence_id": 6,
+          "sentence": "This breakout looks legit.",
+          "direct_tickers": [
+            "KO"
+          ],
+          "inherited_tickers": [],
+          "all_tickers": [
+            "KO"
+          ],
+          "has_tickers": true
+        },
+        {
+          "sentence_id": 7,
+          "sentence": "My target for Tesla is $295 over the next 2-3 months.",
+          "direct_tickers": [
+            "TSLA",
+            "TGT",
+            "SPX"
+          ],
+          "inherited_tickers": [],
+          "all_tickers": [
+            "TSLA",
+            "TGT",
+            "SPX"
+          ],
+          "has_tickers": true
+        },
+        {
+          "sentence_id": 8,
+          "sentence": "Now switching to Apple - AAPL had a mixed quarter.",
+          "direct_tickers": [
+            "AAPL",
+            "NATGAS"
+          ],
+          "inherited_tickers": [],
+          "all_tickers": [
+            "AAPL",
+            "NATGAS"
+          ],
+          "has_tickers": true
+        },
+        {
+          "sentence_id": 9,
+          "sentence": "iPhone revenue was down but services revenue grew 16%.",
+          "direct_tickers": [
+            "SPX",
+            "DJIA"
+          ],
+          "inherited_tickers": [],
+          "all_tickers": [
+            "SPX",
+            "DJIA"
+          ],
+          "has_tickers": true
+        },
+        {
+          "sentence_id": 10,
+          "sentence": "The stock is hovering around $185 support.",
+          "direct_tickers": [
+            "NATGAS"
+          ],
+          "inherited_tickers": [],
+          "all_tickers": [
+            "NATGAS"
+          ],
+          "has_tickers": true
+        }
+      ],
+      "ticker_summary": {
+        "total_sentences": 10,
+        "sentences_with_tickers": 10,
+        "sentences_with_inheritance": 0,
+        "unique_tickers": [
+          "TSLA",
+          "NATGAS",
+          "SPX",
+          "SOL",
+          "SILVER",
+          "KO",
+          "TGT",
+          "AAPL",
+          "DJIA"
+        ],
+        "ticker_counts": {
+          "TSLA": 3,
+          "NATGAS": 4,
+          "SPX": 5,
+          "SOL": 1,
+          "SILVER": 1,
+          "KO": 1,
+          "TGT": 1,
+          "AAPL": 1,
+          "DJIA": 1
+        }
+      }
+    },
+    {
+      "source": "youtube",
+      "trader": "graham_stephan",
+      "original_transcript": "I want to share my thoughts on Tesla and Apple...",
+      "sentences": [
+        "I want to share my thoughts on my recent Tesla positions.",
+        "I've been adding to TSLA on weakness.",
+        "The energy business is exploding and FSD is making progress.",
+        "For Apple, it's been my largest holding for years.",
+        "The services revenue keeps growing double digits."
+      ],
+      "sentence_count": 5,
+      "processing_date": "2024-01-15",
+      "tagged_sentences": [
+        {
+          "sentence_id": 1,
+          "sentence": "I want to share my thoughts on my recent Tesla positions.",
+          "direct_tickers": [
+            "TSLA",
+            "SILVER",
+            "SPX"
+          ],
+          "inherited_tickers": [],
+          "all_tickers": [
+            "TSLA",
+            "SILVER",
+            "SPX"
+          ],
+          "has_tickers": true
+        },
+        {
+          "sentence_id": 2,
+          "sentence": "I've been adding to TSLA on weakness.",
+          "direct_tickers": [
+            "TSLA",
+            "NATGAS",
+            "SPX"
+          ],
+          "inherited_tickers": [],
+          "all_tickers": [
+            "TSLA",
+            "NATGAS",
+            "SPX"
+          ],
+          "has_tickers": true
+        },
+        {
+          "sentence_id": 3,
+          "sentence": "The energy business is exploding and FSD is making progress.",
+          "direct_tickers": [
+            "SPX",
+            "SILVER",
+            "NATGAS"
+          ],
+          "inherited_tickers": [],
+          "all_tickers": [
+            "SPX",
+            "SILVER",
+            "NATGAS"
+          ],
+          "has_tickers": true
+        },
+        {
+          "sentence_id": 4,
+          "sentence": "For Apple, it's been my largest holding for years.",
+          "direct_tickers": [
+            "AAPL",
+            "SPX",
+            "NATGAS"
+          ],
+          "inherited_tickers": [],
+          "all_tickers": [
+            "AAPL",
+            "SPX",
+            "NATGAS"
+          ],
+          "has_tickers": true
+        },
+        {
+          "sentence_id": 5,
+          "sentence": "The services revenue keeps growing double digits.",
+          "direct_tickers": [
+            "SPX",
+            "NATGAS"
+          ],
+          "inherited_tickers": [],
+          "all_tickers": [
+            "SPX",
+            "NATGAS"
+          ],
+          "has_tickers": true
+        }
+      ],
+      "ticker_summary": {
+        "total_sentences": 5,
+        "sentences_with_tickers": 5,
+        "sentences_with_inheritance": 0,
+        "unique_tickers": [
+          "TSLA",
+          "SILVER",
+          "SPX",
+          "NATGAS",
+          "AAPL"
+        ],
+        "ticker_counts": {
+          "TSLA": 2,
+          "SILVER": 2,
+          "SPX": 5,
+          "NATGAS": 4,
+          "AAPL": 1
+        }
+      }
+    }
+  ],
+  "original_statistics": {
+    "total_transcript_hours": 2.5,
+    "total_videos_collected": 10,
+    "total_transcripts_collected": 2
+  },
+  "sentence_processing_date": "2024-01-15",
+  "ticker_tagging_date": "2025-06-23"
+}
