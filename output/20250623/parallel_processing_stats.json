@@ -1,9 +1,9 @@
 {
-  "total_transcripts_processed": 2,
-  "total_sentences_generated": 138,
-  "total_processing_time": 54.091092348098755,
-  "average_processing_time": 27.045546174049377,
-  "chunks_processed": 4,
-  "workers_used": 4,
-  "last_processed": "2025-06-23T09:18:22.939918"
+  "total_transcripts_processed": 6,
+  "total_sentences_generated": 128,
+  "total_processing_time": 174.14547777175903,
+  "average_processing_time": 29.02424629529317,
+  "chunks_processed": 12,
+  "workers_used": 2,
+  "last_processed": "2025-06-23T10:25:54.602845"
 }

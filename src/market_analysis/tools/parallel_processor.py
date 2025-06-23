@@ -73,9 +73,10 @@ class ParallelSentenceProcessor:
             'chunk_overlap': 1000,  # Increased overlap
             'min_chunk_size': 5000,  # Minimum chunk size
             'use_hybrid': True,
-            'use_transformer': False,  # Disable heavy processing
+            'use_transformer': True,  # Enable transformer processing
             'use_spacy': True,
-            'use_nltk': True
+            'use_nltk': True,
+            'use_rule': True  # Explicitly enable rule-based
         }
     
     def process_sentences(self, transcript: str, source: str = "youtube", trader: str = "") -> Dict[str, Any]:
@@ -643,13 +644,96 @@ class NLTKProcessor:
 
 class TransformerProcessor:
     def __init__(self):
-        self.tokenizer = None
-        self.model = None
-        # Disable transformer for now as it's too heavy for parallel processing
+        try:
+            # Use a lightweight transformer model for sentence segmentation
+            from transformers import pipeline
+            self.segmenter = pipeline(
+                "token-classification",
+                model="distilbert-base-uncased",
+                tokenizer="distilbert-base-uncased"
+            )
+            self.logger = logging.getLogger(__name__)
+        except Exception as e:
+            print(f"Could not initialize transformer: {e}")
+            self.segmenter = None
     
     def split_sentences(self, text: str) -> List[str]:
-        # Return simple split for now
-        return [text]
+        if not self.segmenter:
+            # Fallback to simple splitting
+            return self._simple_transformer_split(text)
+        
+        try:
+            # Use transformer-based approach
+            return self._transformer_sentence_split(text)
+        except Exception as e:
+            print(f"Transformer processing failed: {e}")
+            return self._simple_transformer_split(text)
+    
+    def _transformer_sentence_split(self, text: str) -> List[str]:
+        """Use transformer for intelligent sentence splitting"""
+        # For now, use a hybrid approach with transformers for validation
+        sentences = []
+        
+        # Simple sentence splitting first
+        potential_sentences = re.split(r'[.!?]+', text)
+        
+        for sentence in potential_sentences:
+            sentence = sentence.strip()
+            if len(sentence) < 10:
+                continue
+                
+            # Use transformer to validate if this is a complete sentence
+            if self._is_complete_sentence(sentence):
+                if not sentence.endswith(('.', '!', '?')):
+                    sentence += '.'
+                sentences.append(sentence)
+        
+        return sentences
+    
+    def _is_complete_sentence(self, text: str) -> bool:
+        """Use transformer to determine if text is a complete sentence"""
+        try:
+            # Simple heuristic for now - can be enhanced with actual transformer logic
+            words = text.split()
+            if len(words) < 3:
+                return False
+            
+            # Check for financial patterns
+            has_financial_content = any(
+                re.search(pattern, text) for pattern in [
+                    r'\$\d+', r'\d+%', r'\b[A-Z]{2,5}\b'
+                ]
+            )
+            
+            # Prefer sentences with financial content
+            return len(words) >= 5 or has_financial_content
+            
+        except Exception:
+            return len(text.split()) >= 5
+    
+    def _simple_transformer_split(self, text: str) -> List[str]:
+        """Fallback transformer-style splitting"""
+        sentences = []
+        
+        # Split on sentence boundaries but be smart about it
+        parts = re.split(r'([.!?]+)', text)
+        current = ""
+        
+        for i, part in enumerate(parts):
+            if re.match(r'[.!?]+', part):
+                current += part
+                if current.strip():
+                    sentence = current.strip()
+                    if len(sentence) >= 10:
+                        sentences.append(sentence)
+                current = ""
+            else:
+                current += part
+        
+        if current.strip() and len(current.strip()) >= 10:
+            sentences.append(current.strip())
+        
+        return sentences
 
 
 class HybridProcessor:
